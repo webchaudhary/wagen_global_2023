@@ -1,0 +1,1693 @@
+<html>
+
+<head>
+  <meta charset="utf-8" />
+
+  <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.9.0/build/ol.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    @font-face {
+      font-family: Fira Sans;
+      font-weight: 400;
+      src: url(firasans-regular.otf);
+    }
+
+    @font-face {
+      font-family: Fira Sans;
+      font-style: italic;
+      font-weight: 400;
+      src: url(firasans-italic.otf);
+    }
+
+    @font-face {
+      font-family: Fira Sans;
+      font-weight: 300;
+      src: url(firasans-light.otf);
+    }
+
+    @font-face {
+      font-family: Fira Sans;
+      font-style: italic;
+      font-weight: 300;
+      src: url(firasans-lightitalic.otf);
+    }
+
+    @font-face {
+      font-family: Fira Sans;
+      font-weight: 700;
+      src: url(firasans-bold.otf);
+    }
+
+    @page {
+      @top-left {
+        background: #dfc99e;
+        content: counter(page);
+        height: 1cm;
+        text-align: center;
+        width: 1cm;
+      }
+
+      @top-center {
+        background: #dfc99e;
+        content: "";
+        display: block;
+        height: 0.05cm;
+        opacity: 0.5;
+        width: 100%;
+      }
+
+      @top-right {
+        content: string(heading);
+        font-size: 9pt;
+        height: 1cm;
+        vertical-align: middle;
+        width: 100%;
+      }
+
+      @bottom-right {
+        /* background: url(1.png) no-repeat center; */
+
+        background-size: cover;
+        height: 2cm;
+        width: 2cm;
+        content: "";
+      }
+    }
+
+    @page :blank {
+      @top-left {
+        background: none;
+        content: "";
+      }
+
+      @top-center {
+        content: none;
+      }
+
+      @top-right {
+        content: none;
+      }
+
+      @left-middle {
+        /* content: "This is the first sentence. \A This is the second sentence."; */
+        white-space: pre;
+        margin-left: 30px;
+        height: 2em;
+        line-height: 1.5em;
+      }
+    }
+
+    @page no-chapter {
+      @top-left {
+        background: none;
+        content: none;
+      }
+
+      @top-center {
+        content: none;
+      }
+
+      @top-right {
+        content: none;
+      }
+    }
+
+    @page :first {
+      /* background: url(banner.jpg) no-repeat center; */
+      background-color: #faf6e0;
+      margin: 0;
+    }
+
+    @page chapter {
+      background: #dfc99e;
+      margin: 0;
+
+      @top-left {
+        content: none;
+      }
+
+      @top-center {
+        content: none;
+      }
+
+      @top-right {
+        content: none;
+      }
+    }
+
+    html {
+      color: #393939;
+      font-family: calibri;
+      font-size: 11pt;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    h1 {
+      color: #ffffff;
+      font-size: 30pt;
+      page: no-chapter;
+      width: 100%;
+      border-bottom: 2px solid white;
+      margin-bottom: 0;
+      font-weight: 300;
+    }
+
+    h4 {
+      color: black;
+      font-weight: 400;
+    }
+
+    h2 {
+      break-before: always;
+      color: #e27434;
+      font-size: 28pt;
+      string-set: heading content();
+    }
+
+    h3 {
+      font-weight: 200;
+      font-size: 15pt;
+    }
+
+    h2,
+    h3,
+    h4 {
+      font-size: 13pt;
+    }
+
+    p {
+      text-align: justify;
+    }
+
+    .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 40%;
+    }
+
+    img {
+      width: 114%;
+      height: 100%;
+    }
+
+    .imgTxt {
+      font-size: 11px;
+      font-style: italic;
+    }
+
+    em {
+      font-family: bold;
+    }
+
+    .small {
+      height: 100px;
+      width: 40%;
+    }
+
+    .map {
+      height: 200px;
+      width: 80%;
+      margin: 0 auto;
+      border: 2px solid #939393;
+    }
+
+    #cover {
+      align-content: space-between;
+      display: flex;
+      flex-wrap: wrap;
+      height: 297mm;
+    }
+
+    #cover #header {
+      margin: 4cm -1cm 0 -1cm;
+      width: 110%;
+      background: url({{base_url}}/static/imgs/banner.jpg) no-repeat center;
+      background-size: cover;
+      display: flex;
+      flex-direction: row;
+      padding: 0cm 1cm;
+    }
+
+    #cover #header #header-title {
+      width: 75%;
+      padding-left: 20px;
+    }
+
+    #cover #header #header-logo {
+      width: 25%;
+    }
+
+    #cover #header #header-title p {
+      color: #3cb5ca;
+      font-style: italic;
+      font-size: 25pt;
+      font-weight: 500;
+      margin-top: 0;
+      margin-bottom: 3pt;
+    }
+
+    #cover address {
+      background: #e6d262;
+      flex: 1 50%;
+      margin: 0 -2cm;
+      padding: 1cm 0;
+      font-size: 25px;
+      white-space: pre-wrap;
+    }
+
+    #cover address:first-of-type {
+      padding-left: 3cm;
+    }
+
+    #contents {
+      break-before: right;
+      break-after: left;
+      page: no-chapter;
+    }
+
+    #contents h2 {
+      font-size: 20pt;
+      font-weight: 400;
+      margin-bottom: 1.5cm;
+    }
+
+    #contents h3 {
+      font-weight: 500;
+      margin: 3em 0 1em;
+    }
+
+    #contents h3::before {
+      background: #dfc99e;
+      content: "";
+      display: block;
+      height: 0.08cm;
+      margin-bottom: 0.25cm;
+      width: 2cm;
+    }
+
+    #contents ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    #contents ul li {
+      border-top: 0.25pt solid #c1c1c1;
+      margin: 0.25cm 0;
+      padding-top: 0.25cm;
+    }
+
+    #contents ul li::before {
+      color: #dfc99e;
+      content: "• ";
+      font-size: 40pt;
+      line-height: 16pt;
+      vertical-align: bottom;
+    }
+
+    #contents ul li a {
+      color: inherit;
+      text-decoration-line: inherit;
+    }
+
+    #contents ul li a::before {
+      content: target-text(attr(href));
+    }
+
+    #contents ul li a::after {
+      color: #dfc99e;
+      content: target-counter(attr(href), page);
+      float: right;
+    }
+
+    #small-images {
+      display: flex;
+      flex-direction: row;
+    }
+
+    #study section {
+      columns: 2;
+      column-gap: 1cm;
+    }
+
+    #study section p {
+      text-align: justify;
+    }
+
+    #study section p:first-of-type {}
+
+    #precipitation section {
+      columns: 2;
+      column-gap: 1cm;
+    }
+
+    #precipitation section p {
+      text-align: justify;
+    }
+
+    #precipitation section p:first-of-type {}
+
+    #temporal section {
+      columns: 2;
+      column-gap: 1cm;
+    }
+
+    #temporal section p {
+      text-align: justify;
+    }
+
+    #temporal section p:first-of-type {}
+
+    #land section {
+      columns: 2;
+      column-gap: 1cm;
+    }
+
+    #land section p {
+      text-align: justify;
+    }
+
+    #land section p:first-of-type {}
+
+    #trend section {
+      columns: 2;
+      column-gap: 1cm;
+    }
+
+    #trend section p {
+      text-align: justify;
+    }
+
+    #trend section p:first-of-type {}
+
+    #partitioning section {
+      columns: 2;
+      column-gap: 1cm;
+    }
+
+    #partitioning section p {
+      text-align: justify;
+    }
+
+    #partitioning section p:first-of-type {}
+
+    #blue section {
+      columns: 2;
+      column-gap: 1cm;
+    }
+
+    #blue section p {
+      text-align: justify;
+    }
+
+    #blue section p:first-of-type {}
+
+    #waterp section {
+      columns: 2;
+      column-gap: 1cm;
+    }
+
+    #waterp section p {
+      text-align: justify;
+    }
+
+    #waterp section p:first-of-type {}
+
+    #waterd section {
+      columns: 2;
+      column-gap: 1cm;
+    }
+
+    #waterd section p {
+      text-align: justify;
+    }
+
+    #waterd section p:first-of-type {}
+
+    #waters section {
+      columns: 2;
+      column-gap: 1cm;
+    }
+
+    #waters section p {
+      text-align: justify;
+    }
+
+    #waters section p:first-of-type {}
+
+    #climate section {
+      columns: 2;
+      column-gap: 1cm;
+    }
+
+    #climate section p {
+      text-align: justify;
+    }
+
+    #climate section p:first-of-type {}
+
+    #waterstorage section {
+      columns: 2;
+      column-gap: 1cm;
+    }
+
+    #waterstorage section p {
+      text-align: justify;
+    }
+
+    #waterstorage section p:first-of-type {}
+
+    #data section {
+      columns: 2;
+      column-gap: 1cm;
+    }
+
+    #data section p {
+      text-align: justify;
+    }
+
+    #data section p:first-of-type {}
+
+    #annex section {
+      columns: 1;
+      column-gap: 1cm;
+    }
+
+    #annex section p {
+      text-align: justify;
+    }
+
+    #annex section p:first-of-type {}
+
+    #skills h3 {
+      background: #dfc99e;
+      margin: 0 -3cm 1cm;
+      padding: 1cm 1cm 1cm 3cm;
+      width: 21cm;
+    }
+
+    #skills section {
+      padding: 0.5cm 0;
+    }
+
+    #skills section#table-content::before {
+      background: url(table-content.svg) no-repeat center #dfc99e;
+      background-size: 50%;
+      content: "";
+      display: inline-block;
+      float: left;
+      height: 2cm;
+      margin-right: 0.5cm;
+      vertical-align: middle;
+      width: 2cm;
+    }
+
+    #skills section#heading::before {
+      background: url(heading.svg) no-repeat center #dfc99e;
+      background-size: 50%;
+      content: "";
+      display: inline-block;
+      float: left;
+      height: 2cm;
+      margin-right: 0.5cm;
+      vertical-align: middle;
+      width: 2cm;
+    }
+
+    #skills section#multi-columns::before {
+      background: url(multi-columns.svg) no-repeat center #dfc99e;
+      background-size: 50%;
+      content: "";
+      display: inline-block;
+      float: left;
+      height: 2cm;
+      margin-right: 0.5cm;
+      vertical-align: middle;
+      width: 2cm;
+    }
+
+    #skills section#internal-links::before {
+      background: url(internal-links.svg) no-repeat center #dfc99e;
+      background-size: 50%;
+      content: "";
+      display: inline-block;
+      float: left;
+      height: 2cm;
+      margin-right: 0.5cm;
+      vertical-align: middle;
+      width: 2cm;
+    }
+
+    #skills section#style::before {
+      background: url(style.svg) no-repeat center #dfc99e;
+      background-size: 50%;
+      content: "";
+      display: inline-block;
+      float: left;
+      height: 2cm;
+      margin-right: 0.5cm;
+      vertical-align: middle;
+      width: 2cm;
+    }
+
+    #skills section h4 {
+      margin: 0;
+    }
+
+    #skills section p {
+      margin-top: 0;
+    }
+
+    #offers {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    #offers h2,
+    #offers h3 {
+      width: 100%;
+    }
+
+    #offers section {
+      width: 30%;
+    }
+
+    #offers section h4 {
+      margin-bottom: 0;
+    }
+
+    #offers section ul {
+      list-style: none;
+      margin: 0;
+      padding-left: 0;
+    }
+
+    #offers section ul li:not(:last-of-type) {
+      margin: 0.5cm 0;
+    }
+
+    #offers section p {
+      background: #dfc99e;
+      display: block;
+      font-size: 15pt;
+      font-weight: 700;
+      margin-bottom: 0;
+      padding: 0.25cm 0;
+      text-align: center;
+    }
+
+    #chapter {
+      align-items: center;
+      display: flex;
+      height: 297mm;
+      justify-content: center;
+      page: chapter;
+    }
+
+    #typography section {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 1cm 0;
+    }
+
+    #typography section h4 {
+      border-top: 1pt solid;
+      flex: 1 25%;
+      margin: 0;
+    }
+
+    #typography section h4+* {
+      flex: 1 75%;
+      margin: 0;
+      padding-left: 0.5cm;
+    }
+
+    #typography section p {
+      text-align: justify;
+    }
+
+    #typography section ul {
+      line-height: 2;
+      list-style: none;
+    }
+
+    #typography section#small-caps p {
+      font-variant: small-caps;
+    }
+
+    #typography section#ligatures dl {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    #typography section#ligatures dl dt {
+      font-weight: 400;
+      width: 30%;
+    }
+
+    #typography section#ligatures dl dd {
+      flex: 1 70%;
+      margin: 0;
+      padding: 0;
+    }
+
+    #typography section#ligatures .none {
+      font-variant-ligatures: none;
+    }
+
+    #typography section#ligatures .common {
+      font-variant-ligatures: common-ligatures;
+    }
+
+    #typography section#ligatures .discretionary {
+      font-variant-ligatures: discretionary-ligatures;
+    }
+
+    #typography section#ligatures .contextual {
+      font-variant-ligatures: contextual;
+    }
+
+    #typography section#numbers dl {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    #typography section#numbers dl dt {
+      font-weight: 400;
+      width: 30%;
+    }
+
+    #typography section#numbers dl dd {
+      flex: 1 70%;
+      margin: 0;
+      padding: 0;
+    }
+
+    #typography section#numbers #fractions {
+      font-variant-numeric: diagonal-fractions;
+    }
+
+    #typography section#numbers #ordinals {
+      font-variant-numeric: ordinal;
+    }
+
+    #typography section#numbers #slashed {
+      font-variant-numeric: slashed-zero;
+    }
+
+    #typography section#numbers #super {
+      font-variant-position: super;
+    }
+
+    #typography section#numbers #sub {
+      font-variant-position: sub;
+    }
+
+    #typography section#figures dl {
+      columns: 4;
+    }
+
+    #typography section#figures dl dt {
+      font-weight: 400;
+    }
+
+    #typography section#figures dl dd {
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+
+    #typography section#figures dl dd ul {
+      padding: 0 1em 0 0;
+    }
+
+    #typography section#figures #oldstyle {
+      font-variant-numeric: oldstyle-nums;
+    }
+
+    #typography section#figures #tabular {
+      font-variant-numeric: tabular-nums;
+    }
+
+    #typography section#figures #old-tabular {
+      font-variant-numeric: oldstyle-nums tabular-nums;
+    }
+
+    /* TABLE */
+
+    table {
+      border: none !important;
+    }
+
+    table thead {
+      background-color: #002f54;
+      color: white;
+      padding-left: 3px;
+
+    }
+
+    table #dataHeading {
+      background-color: #98242b;
+      color: white;
+    }
+
+    table th {
+      text-align: center;
+      font-size: 13px;
+    }
+
+    table td {
+      background-color: #ffd17b;
+      padding-left: 3px;
+      font-size: 13px;
+    }
+
+    table td:first-child {
+      background: #98242b;
+      color: white;
+      padding-left: 3px;
+    }
+
+    table tr:last-child {
+      font-weight: bold;
+    }
+
+    .no-break {
+      page-break-inside: avoid;
+    }
+
+
+
+
+
+    @page landscape_page {
+      size: landscape;
+    }
+
+    .tables_section {
+      page: landscape_page;
+    }
+  </style>
+
+  <title>Water Accounting Report</title>
+  <meta name="description" content="Water Accounting Report" />
+</head>
+
+<body>
+  <article id="cover">
+    <div id="header">
+      <div id="header-title">
+        <h1>Water Accounting Report</h1>
+        <p>{{ area }} - {{ stats.st }} to {{ stats.sp }}</p>
+      </div>
+
+      <div id="header-logo">
+        <img src="{{base_url}}/static/imgs/logo1.jpg"
+          style="height: auto;width: auto; margin-top: 39px; margin-left: 20px;" />
+
+
+
+      </div>
+    </div>
+
+    <address>
+    </address>
+    <!-- <address>contact@courtbouillon.org https://courtbouillon.org</address> -->
+  </article>
+
+
+  <article id="disclaimer">
+    <br />
+    This report was produced by the Water Accounting Workstream of the Water Global Practice. For more information,
+    please contact Poolad Karimi (PKarimi@worldbank.org).
+
+    <h3 style="color: #e27434; font-weight: 400;">Copyright </h3>
+    <p>
+      © 2024 International Bank for Reconstruction and Development / The World Bank <br />
+      1818 H Street NW<br />
+      Washington DC 20433<br />
+      Telephone: 202-473-1000<br />
+      Internet: <span style="color: #e27434;">www.worldbank.org</span><br />
+      <br />
+
+
+      This work is a product of the staff of The World Bank with external contributions. The findings, interpretations,
+      and conclusions expressed in this work do not necessarily reflect the views of The World Bank, its Board of
+      Executive Directors, or the governments they represent. <br />
+
+      The World Bank does not guarantee the accuracy, completeness, or currency of the data included in this work and
+      does not assume responsibility for any errors, omissions, or discrepancies in the information, or liability with
+      respect to the use of or failure to use the information, methods, processes, or conclusions set forth. The
+      boundaries,
+      colors, denominations, links/footnotes and other information shown in this work do not imply any judgment on the
+      part of The World Bank concerning the legal status of any territory or the endorsement or acceptance of such
+      boundaries. The citation of works authored by others does not mean the World Bank endorses the views expressed by
+      those authors or the content of their works. <br />
+
+      Nothing herein shall constitute or be construed or considered to be a limitation upon or waiver of the privileges
+      and immunities of The World Bank, all of which are specifically reserved.
+    </p> <br />
+
+
+
+
+    <h3 style="color: #e27434; font-weight: 400;"> Rights and Permissions </h3>
+
+    <p>
+      The material in this work is subject to copyright. Because The World Bank encourages dissemination of its
+      knowledge,
+      this work may be reproduced, in whole or in part, for noncommercial purposes as long as full attribution to this
+      work is given.<br />
+      Any queries on rights and licenses, including subsidiary rights, should be addressed to World Bank Publications,
+      The
+      World Bank Group, 1818 H Street NW, Washington, DC 20433, USA; fax: 202-522-2625; e-mail:
+      <span style="color: #e27434;">pubrights@worldbank.org.</span>
+    </p>
+
+
+  </article>
+
+
+  <article id="contents">
+    <h2>Table of contents</h2>
+    <ul>
+      <li><a href="#study-title"></a></li>
+      <li><a href="#precipitation-title"></a></li>
+      <!-- </ul> -->
+
+      <!-- <h3>Part two</h3> -->
+      <!-- <ul> -->
+      <li><a href="#temporal-title"></a></li>
+      <li><a href="#land-title"></a></li>
+      <li><a href="#trend-title"></a></li>
+      <li><a href="#partitioning-title"></a></li>
+      <li><a href="#blue-title"></a></li>
+      <li><a href="#waterp-title"></a></li>
+      <li><a href="#waterd-title"></a></li>
+      <li><a href="#waters-title"></a></li>
+      <li><a href="#climate-title"></a></li>
+      <li><a href="#waterstorage-title"></a></li>
+      <li><a href="#data-title"></a></li>
+      <li><a href="#annex-title"></a></li>
+    </ul>
+  </article>
+
+  <article id="study">
+    <h2 id="study-title">Study area</h2>
+
+    <!-- <h3>
+      This is a little subtitle, here to explain what we are talking about
+    </h3> -->
+
+    <!-- <section> -->
+    <p>
+      The study area <strong>{{ area }}</strong> lies between
+      Longitudes: <strong>{{ stats.w }} - {{ stats.e }}</strong> and Latitudes: <strong>{{ stats.s }} - {{ stats.n
+        }}</strong>. The total area is <strong>{{ stats.area }} Sq.Km</strong>. The elevation in the study area varies
+      between <b>{{ stats.dem_min }} m </b> and <b>{{ stats.dem_max }} m</b>. <strong>Figure 1</strong> shows the
+      distribution of elevation
+      and topography of the study area using the <a href="https://www.eorc.jaxa.jp/ALOS/en/index_e.htm">global
+        Digital Elevation Model (DEM)</a> data.
+    </p>
+
+    <img src="{{base_url}}/media/{{ job }}/fig1.png" alt="" style="width: 100%; margin-top: 10px;">
+    <p class="imgTxt" style="margin-top: 0px;"><span>Figure 1</span> Study area with distribution of elevation <a
+        href="{{base_url}}/media/{{ job }}/DEM.tif">Download
+        data</a> </p>
+
+    <p>The values represent elevation from above sea level. Areas in blue have lower elevation than those in yellow and
+      brown. The major land cover types in the {{ area }} are <b>{{ stats.lc0 }}</b> and <b>{{ stats.lc1 }}</b> covering
+      an area of <b>{{ stats.lca0 }} Sq.Km</b> and <b>{{ stats.lca1 }} Sq.Km</b> respectively. <br>
+      <br>
+      <em>Figure 2</em> is a pie chart showing the area distribution of different land cover types in the study area,
+      while <em>Figure 3</em> shows the spatial distribution of the land cover types in the study area. In these
+      figures, different land cover types are represented by unique colors. For example croplands are shown in light
+      green. Croplands in this map, and also in <em>Figure 2</em>, represent both irrigated and rainfed areas.
+    </p>
+
+    <!-- <section id="small-images"> -->
+    <img src="{{base_url}}/media/{{job}}/pie.png" alt="Landcover" style="width: 40%;">
+    <img src="{{base_url}}/media/{{job}}/leg.png" alt="Legend" style="width: 40%;">
+
+
+    <!-- </section> -->
+    <p class="imgTxt" style="margin-top: 0px;"><span>Figure 2</span> Pie chart showing land cover area distribution </p>
+
+    <p>
+      <img src="{{base_url}}/media/{{job}}/lc.png" alt="" style="width: 100%; margin-top: 20px;">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 3</span> Land cover map (Copernicus) of study area <a
+        href="{{base_url}}/media/{{job}}/LC.tif">Download data</a>
+    </p>
+    </p>
+
+    <!-- </section> -->
+  </article>
+
+  <article id="precipitation">
+    <h2 id="precipitation-title">Precipitation and Evapotranspiration</h2>
+
+    <!-- <h3>
+      This is a little subtitle, here to explain what we are talking about
+    </h3> -->
+
+    <p>
+      <b>Precipitation</b> is the key water source in the hydrological cycle. It refers to all forms of condensation of
+      atmospheric water vapor that falls from clouds. The main forms of precipitation include drizzling, rain, sleet,
+      snow, ice pellets, graupel and hail. In the river basins, where there is no other inflow (e.g. through surface or
+      subsurface flow), the total precipitation accounts for the entire total gross inflow, in the water accounting
+      terms, in any given time period.
+    </p>
+
+    <p>
+      For estimating precipitation in the study area,the remote sensing based {{ stats.pcp }} data is used. Mean annual
+      P over the basin is reported to be {{ stats.p }} mm/year. <em>Figure 4</em> shows the distribution of P over the
+      study area. P values in this map represent the average annual P for the study period of {{ stats.st }} - {{
+      stats.sp }}.
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/pcp.png" alt="" style="width: 100%; margin-top: 10px;">
+    <p class="imgTxt" style="text-align: center;"><span>Figure 4</span> Mean annual Precipitation map ({{ stats.pcp
+      }})<a href="{{base_url}}/media/{{job}}/PCP.tif">Download data</a>
+    </p>
+
+    <p>
+      The daily data were aggregated to annual maps and the average annual P per year for the study area was calculated
+      for the duration of the study. Areas mapped in light blue in <em>Figure 4</em> receive lower precipitation than
+      the areas in darker shades of blue. The legend provided explains the values different colors represent. <br>
+    </p>
+
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+
+    <p>
+      <b>Evapotranspiration</b> is another key component of the hydrological cycle. It refers to the water that is lost
+      to the atmosphere through the vaporization process. Water that becomes evapotranspired is no longer available for
+      further use, hence it is commonly referred to as consumed water in the water accounting terminology. For this
+      report, the long-term average annual ETa values from the {{ stats.et }} product was used to estimate and map ETa
+      in the study area for the selected period. <em>Figure 5</em> shows the spatial distribution of the average annual
+      ETa.
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/eta.png" alt="" style="width: 100%; margin-top: 10px;">
+    <p class="imgTxt" style="text-align: center;"><span>Figure 5</span> Mean annual ETa map ({{ stats.et }})<a
+        href="{{base_url}}/media/{{job}}/ETa.tif">Download data</a>
+    </p>
+
+    <p>
+      The average annual ETa in the study area is {{ stats.eta }} mm/year. The ETa values are mapped in red-yellow-Blue
+      gradient representing lower-mid-high water consumption in the study area. Open water bodies, typically, have the
+      highest ETa values. This is, usually, followed by areas covered by dense forests and irrigated croplands. In
+      contrast, low ET areas are usually dry areas such as deserts, barelands, urban areas and sparsely vegetated areas.
+      Although this could vary from a place to another, based on the specific characteristics of the study area. <br>
+    </p>
+
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+
+    <p>
+      <strong>Figure 6</strong> shows the spatial distribution of ETa anomaly mean annual precipitation excess or
+      deficit (Right) over the study area.
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/etanomaly.png"" alt="" style=" width: 100%; margin-top: 10px;">
+    <p class="imgTxt" style="text-align: center;"><span>Figure 6</span> Annual ETa anomaly ({{ stats.et }})<a
+        href="{{base_url}}/media/{{job}}/ETano.tif">Download
+        data</a>
+    </p>
+
+    <p>
+      In figure 6, ETa anomaly refers to the variation of ETa in {{ stats.sp }} from the long term ETa. ETa anomaly is
+      computed by computing the percentage change in ETa with respect to the long term median. Higher the percentage (>
+      100), there was positive change in ETa values, lower values represent the decrease in ETa values. The method is
+      explained <a href="https://www.mdpi.com/1424-8220/20/7/1915">here</a>.
+      <br>
+      ETa anomaly is a measure of dryness or wetness. Areas with low values (shown in red) might have experienced
+      drought, depending on the level of variation, and areas with higher values (in blue) have had higher than average
+      water availability, which could be due to increased rainfall or increased irrigation. <br>
+    </p>
+
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+
+    <img src="{{base_url}}/media/{{job}}/pminuset.png" alt="" style="width: 100%; margin-top: 10px;">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 7</span> Mean annual P-ETa ({{ stats.pcp }}-{{ stats.et
+      }}) map over study area <a href="{{base_url}}/media/{{job}}/PminusET.tif">Download data</a>
+    </p>
+
+    <p>
+      <strong>Figure 7</strong> shows Precipitation minus Evapotranspiration (P-ET). P-ET is an indicator that is used
+      in hydrology to investigate availability, or lack thereof, of excessive water in an area. Positive values of P-ET
+      is indicative of presence of surplus water. Depending on the terrain and landscape characteristics, this surplus
+      leaves the area through surface runoff, deeperculation, or both. Negative values of P-ET, indicate that ET has
+      exceeded P. This means water consumption has been supported by additional flow of water which could be due to
+      irrigation or the natural process that leads to such an effect (e.g. in flood recessions areas). The figure maps
+      P-ET in light red-yellow-blue gradient representing high-mid-low precipitation deficit in the study area. Areas in
+      red are typically water bodies and irrigated areas, if present. Areas in blue are water generating areas,
+      typically located in high rainfall areas such as highlands. These areas could be of importance for water
+      availability in the basin and in the downstream areas.
+
+    </p>
+
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+    </br>
+
+    <img src="{{base_url}}/media/{{job}}/etr.png" alt="" style="width: 100%; margin-top: 20px;">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 8</span> Mean annual ETr over the study area <a
+        href="{{base_url}}/media/{{job}}/ETr.tif">Download data</a>
+    </p>
+
+    <p>
+      <strong>Figure 8</strong> shows the spatial distribution of the average annual ETr. The average annual ETr in the
+      study area is {{ stats.etr }} mm/year. The ETr values are mapped in red-yellow-Blue gradient representing
+      lower-mid-high reference evapotranspiration in the study area.
+    </p>
+
+  </article>
+  <article id="temporal">
+    <h2 id="temporal-title">Temporal analysis of Precipitation, ET, and P-ET</h2>
+
+    <!-- <h3>
+      This is a little subtitle, here to explain what we are talking about
+    </h3> -->
+
+    <p>
+      In this section temporal variation of ETa, P and P-ETa for the years {{ stats.st }} - {{ stats.sp }} is analysed.
+      <em>Figure 9</em> shows the interannual variability of rainfall over the study area.
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/pcpbar1.png" alt="" style="width: 100%; margin-top: 10px;" class="center">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 9</span> Annual P ({{ stats.pcp }}) in mm/year over the
+      study area from {{ stats.st }} to {{ stats.sp }} </p>
+    <p>
+      Each bar represents the average precipitation over the study area for the indicated years in mm. The bar graphs
+      are computed using the products - {{ stats.pcp }}. In a multi year analysis (>6 yr), the years with higher P are
+      those that are typically referred to as wet years and those with the lowest P can be considered dry years.
+    </p>
+
+    <p>
+      In addition, two other global precipitation products were processed for the study period (See <em>Table 6</em> for
+      details). This provides a comparison of the precipitation estimates by different remote sensing based global
+      products. The results of this comparison is shown in <strong>Figure 10</strong>.
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/pcpbar2.png" alt="" style="width: 100%;margin-top: 20px;" class="center">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 10</span> Comparison of Annual P ({{ stats.pcp }}) from
+      different products from {{ stats.st }} to {{ stats.sp }} <a
+        href="{{base_url}}/media/{{job}}/Pcomparison.csv">Download
+        table</a>
+    </p>
+
+    <p>
+      This comparison helps the users to select the precipitation product that shows more agreement with the ground
+      measurements, if available, in the study area. <br>
+    </p>
+
+    <p>
+      <strong>Figure 11</strong> shows the interannual variability of ETa over the study area. Each bar represents the
+      average ETa over the study area for the indicated years in mm. The bar graphs are computed using the product - {{
+      stats.et }}.
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/etabar.png" alt="" style="width: 100%; margin-top: 20px;" class="center">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 11</span> Annual ETa ({{ stats.et }}) in mm/year over the
+      study area from {{ stats.st }} to {{ stats.sp }}
+    </p>
+    <br>
+
+    <p>
+      <strong>Figure 12</strong> shows the variation in precipitation excess or deficit over the years by plotting the
+      bar graph of annual P-ETa.
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/pminetbar.png" alt="" style="width: 100%; margin-top: 20px;" class="center">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 12</span> Annual P-ETa (mm/year) over the study area from
+      {{ stats.st }} to {{ stats.sp }} </p>
+
+    <p>
+      In this plot, blue represents the precipitation excess and red represents the precipitation deficit. The temporal
+      variation of water use by each land cover type in the study area is plotted in <strong>Figure 13</strong>. Each
+      year is represented by uniques color in this plot. <hlt>Table 1</hlt> lists the yearly statistics of annual P and
+      ETa in mm/year and km<sup>3</sup>/year for the study period, {{ stats.st }} - {{ stats.sp }}.
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/lcbaret.png" alt="" style="width: 100%; margin-top: 30px;" class="center">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 13</span> Temporal variation of ETa per land cover type
+      from {{ stats.st }} to {{ stats.sp }} computed using {{ stats.et }} & {{ stats.pcp }}
+    </p>
+
+  </article>
+
+  <article id="land">
+    <h2 id="land-title">Land cover based Precipitation and ETa analysis</h2>
+
+    <!-- <h3>
+      This is a little subtitle, here to explain what we are talking about
+    </h3> -->
+
+    <p>
+      Land cover has an important role in hydrology and in water consumption patterns. Hence, to gain better insight
+      into patterns in water availability and water consumption in the study area, P and ETa data was processed to
+      extract these variables per land cover type. It is computed from annual P and ETa using the time series of spatial
+      maps obtained from multiple sources as listed in <em>Table 6</em>. The long-term average annual ETa values from
+      the {{ stats.et }} product and P values from {{ stats.pcp }} per land cover type were extracted to compare the
+      water availability and consumption. <em>Figure 14</em> is a bar plot showing long term annual average ETa and P
+      per Land cover type. <em>Table 2 & 3</em> list the mean annual P, ETa, P-ETa & ETr for each land cover type in the
+      study area in mm/year and km<sup>3</sup>/year respectively.<br>
+    </p>
+
+    <p>
+      <img src="{{base_url}}/media/{{job}}/lcbar.png" alt="" style="width: 100%; margin-top: 20px;" class="center">
+    </p>
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 14</span> Annual ETa ({{ stats.et }}) and precipitation
+      ({{ stats.pcp }}) per land cover type </p>
+
+  </article>
+
+  <article id="trend">
+    <h2 id="trend-title">Trend analysis of Precipitation and ETa</h2>
+
+    <!-- <h3>
+      This is a little subtitle, here to explain what we are talking about
+    </h3> -->
+
+    <p>
+      The time series of Annual ETa and P give insights into the climatic impact on water availability and scarcity in
+      the study area. To understand the variation of ETa and P over the period from {{ stats.st }} - {{ stats.sp }},
+      delta ETa and delta P were computed as a residual of long term averages. Delta ETa and P are plotted in <em>Figure
+        15 & 16</em> with linear trend line showing increasing or decreasing trends in the anomalies.
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/panoplot.png" alt="" style="width: 100%; margin-top: 20px;" class="center">
+    <p class="imgTxt" style="text-align: center;"><span>Figure 15</span> Annual P anomaly </p>
+
+    <img src="{{base_url}}/media/{{job}}/etanoplot.png" alt="" style="width: 100%; margin-top: 20px;" class="center">
+    <p class="imgTxt" style="text-align: center;"><span>Figure 16</span> Annual ETa anomaly </p>
+
+    <br />
+    <br />
+    <br />
+
+    <p>
+      Long term annual precipitation for 40 years is plotted for the period 1981 to 2020 to understand the trend.
+      <em>Figure 17</em> shows the annual precipitation for 40 years with a linear trend line.
+    </p>
+    <img src="{{base_url}}/media/{{job}}/pcpbarts.png" alt="" style="width: 100%; margin-top: 20px;" class="center">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 17</span> Long term precipitation variation from 1981 to
+      2020 derived from CHIRPS data <a href="{{base_url}}/media/{{job}}/pcpts.csv">Download table</a>
+    </p>
+
+  </article>
+
+  {% if stats.et == "wapor2" or stats.et == "wapor3" %}
+
+  <article id="partitioning">
+    <h2 id="partitioning-title">Partitioning ETa into Ea and Ta</h2>
+
+    <!-- <h3>
+      This is a little subtitle, here to explain what we are talking about
+    </h3> -->
+
+
+    <p>
+      Evapotranspiration (ETa) is an aggregation of Evaporation (E) and Transpiration (T). E is related to the
+      vaporization of water from wet surfaces (e.g. water bodies, wet soils, wet urban covers, etc.) and T related to
+      the vaporization of water resulting from the process of water movement through a plant and its vaporization from
+      aerial parts, such as leaves, stems and flowers. While E may not be avoidable in the natural landscape, only T
+      contributes to vegetation growth. Hence, in croplands only T is considered as “Beneficial” consumption of water.
+    </p>
+
+    <p>
+      <strong>Figure 18 & 19</strong> shows the average annual Ea and Ta respectively in the study area. Maps are in
+      red-yellow-Blue gradient representing lower-mid-high E and T in the study area.
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/ea.png" alt="" style="width: 100%; margin-top: 20px;" class="center">
+
+    <p class="imgTxt" style="text-align:center ;"><span>Figure 18</span> Annual Ea(mm/year) over the studyarea <a
+        href="{{base_url}}/media/{{job}}/Ea.tif">Download
+        data</a>
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/ta.png" alt="" style="width: 100%; margin-top: 40px;" class="center">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 19</span> Annual Ta(mm/year) over the studyarea <a
+        href="{{base_url}}/media/{{job}}/Ta.tif">Download data</a></p>
+    </p>
+
+
+  </article>
+
+  <article id="blue">
+    <h2 id="blue-title">Blue and Green ET</h2>
+
+    <!-- <h3>
+      This is a little subtitle, here to explain what we are talking about
+    </h3> -->
+
+    <p>
+      The annual actual ETa is divided into green and blue water. Green water represents the fraction of precipitation
+      that infiltrates into the soil and is available to plants; while blue water comprising runoff, groundwater, and
+      stream base flow.
+    </p>
+
+    <p>
+      The average annual ETb and ETg over cropland in the study area is {{ stats.etb }} mm/year & {{ stats.etg }}
+      mm/year respectively.
+      In this analysis, green ETa was computed by subtracting the average ETa over Rainfed area from ETa over the
+      cropland. The remaining ETa over cropland were considered as blue ETa. The Rainfed area was computed from the <a
+        href="http://due.esrin.esa.int/page_globcover.php">Globcover land cover map</a>. This methodology is explained
+      <a href="https://www.sciencedirect.com/science/article/pii/S2214581821000896">here</a>.
+
+    </p>
+
+    <p>
+      <strong>Figure 20 & 21</strong> shows the spatial distribution of blue and green ETa over cropland. The blue and
+      green ETa are mapped in red-yellow-Blue gradient representing lower-mid-high water use in the study area.
+    </p>
+    <img src="{{base_url}}/media/{{job}}/etb.png" alt="" style="width: 100%; margin-top: 30px;" class="center">
+    <p class="imgTxt" style="text-align: center;"><span>Figure 20</span> Annual blue ET(mm/year) over the cropland
+      <a href="{{base_url}}/media/{{job}}/ETb.tif">Download
+        data</a>
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/etg.png" alt="" style="width: 100%; margin-top: 30px;" class="center">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 21</span> Annual green ET(mm/year) over the cropland
+      <a href="{{base_url}}/media/{{job}}/ETg.tif">Download
+        data</a>
+    </p>
+
+  </article>
+
+  {% endif %}
+
+
+
+  <article id="waterp">
+    <h2 id="waterp-title">Water Productivity</h2>
+
+    <!-- <h3>
+      This is a little subtitle, here to explain what we are talking about
+    </h3> -->
+
+    <p>
+      The biomass production over different land cover types in the study area was estimated using the Total Biomass
+      Production (TBP) data obtained from the Copernicus Global Land service. TBP represents the overall growth rate or
+      dry biomass increase of the vegetation and is directly related to ecosystem Net Primary Productivity (NPP),
+      however with units customized for agro-statistical purposes (kg/ha/day). The 10 days product were downloaded and
+      aggregated at monthly scale.
+      The WP indicator gives an estimate about the production per unit of water use. In this case seasonal TBP is used
+      representing the overall biomass growth rate. The biomass water productivity was computed using the below formula:
+    </p>
+    <br>
+    <i>Annual WPb = Annual TBP / Annual ETa</i><br>
+    <br>
+    <p>
+      <strong>Figure 22 & 23</strong> shows the spatial distribution of TBP & WPb respectively over cropland computed
+      from averaged annual maps for the period - {{ stats.st }} - {{ stats.sp }}.
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/dmp.png" alt="" style="width: 100%; margin-top: 40px;" class="center">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 22</span> Annual TBP (Kg/ha) over cropland <a
+        href="{{base_url}}/media/{{job}}/DMP.tif">Download
+        data</a>
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/wpdmp.png" alt="" style="width: 100%; margin-top: 40px;" class="center">
+
+    <p class="imgTxt" style="text-align:center ;"><span>Figure 23</span> Annual Water Productivity (Kg/m<sup>3</sup>)
+      map over cropland <a href="{{base_url}}/media/{{job}}/WPDMP.tif">Download
+        data</a>
+    </p>
+
+    <p>
+      TBP map in <strong>Figure 23</strong> uses a dark brown-white-green representing lower-mid-high biomass production
+      in kg/ha. Water productivity is mapped with a red to green gradient, red areas represents lower WPb and green
+      areas represents higher WPb.
+      <br>
+      The annual mean TBP and WPb over cropland for the period - {{ stats.st }} - {{ stats.sp }} can be downloaded
+      <a href='{{base_url}}/media/{{job}}/wpbtable.csv' target="_blank">here</a>.
+    </p>
+
+  </article>
+  <article id="waterd">
+    <h2 id="waterd-title">Water Deficit Index (WDI)</h2>
+
+    <!-- <h3>
+      This is a little subtitle, here to explain what we are talking about
+    </h3> -->
+
+    <p>
+      Mapping WDI over cropland provide insights about lack of water availability spatially and support investment
+      decisions that aim at improving equity in service delivery across the cropped area. In this analysis the maximum
+      ETa computed from the univariate distribution of ETa over the cropland was used following the formula:
+    </p>
+    <i>WDI = 1 - (ETa / ETx)</i> <br>
+    <br>
+    Where ETx is the maximum ETa over cropland. <strong>Figure 24</strong> shows the spatial distribution of WDI over
+    the cropland.
+
+    <img src="{{base_url}}/media/{{job}}/rwd.png" alt="" style="width: 100%; margin-top: 30px;" class="center">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 24</span> Water Deficit Index (WDI) over cropland in
+      study area <a href="{{base_url}}/media/{{job}}/WDI.tif">Download data</a>
+    </p>
+
+    <p>
+      WDI is mapped with a blue to red gradient, blue areas represents low water deficit and red areas represents higher
+      water deficit regions. Further long term monthly mean ETa and P from 2010 to 2020 were extracted and plotted
+      (<strong>Figure 25</strong>) to understand the monthly variation of ETa and P over the study area.
+    </p>
+    <img src="{{base_url}}/media/{{job}}/monthlyetabar.png" alt="" style="width: 100%; margin-top: 30px;"
+      class="center">
+    <p class="imgTxt" style="text-align: center;"><span>Figure 25</span> Monthly ETa ({{ stats.et }}) and P ({{
+      stats.pcp }}) distribution over the study area </p>
+
+  </article>
+  <article id="waters">
+    <h2 id="waters-title">Water Scarcity Indices</h2>
+
+    <!-- <h3>
+      This is a little subtitle, here to explain what we are talking about
+    </h3> -->
+    <p>
+      Water scarcity refers to a condition of imbalance between freshwater availability and demand where freshwater
+      demand exceeds availability. In this section severity of water scarcity experienced in the croplands of study area
+      is shown using three indices - Blue Water Scarcity (BWS), Green Water Scarcity (GWS) and Economic Water Scarcity
+      (EWS) as explained by <a href="https://www.science.org/doi/10.1126/sciadv.aaz6031"><strong>Rosa et.al
+          2020</strong></a>.
+    </p>
+
+    <p>
+      <b>Blue water scarcity</b>: When irrigation is unsustainable and renewable blue water availability is insufficient
+      to sustainably meet CWR. In these cases, irrigation impairs environmental flows and depletes freshwater stocks.
+      BWS has been defined as the ratio between societal blue water demand and renewable blue water availability
+    </p>
+
+    <p>
+      <b>Green water scarcity</b>: When green water is insufficient to sustain unstressed crop production and irrigation
+      is needed to boost yields. GWS can be defined as the ratio between irrigation water requirement (or “green water
+      deficit”) and the total CWR.
+    </p>
+
+    <p>
+      <b>Agricultural economic water scarcity</b>: When there is GWS but no BWS. There is renewable blue water to
+      irrigate but lack of economic or institutional capacity. Agricultural economically water scarce croplands are
+      underperforming rainfed croplands suitable for sustainable irrigation expansion.
+    </p>
+
+    <p>
+      In this report, maps showing number of months in a year cropland area are under BWS, GWS and EWS. <strong>Figure
+        26</strong> shows the spatial distribution of BWS over the cropland.
+    </p>
+    <img src="{{base_url}}/media/{{job}}/bws.png" alt="" style="width: 100%; margin-top: 40px;" class="center">
+    <p class="imgTxt" style="text-align: center;"><span>Figure 26</span> Blue Water Scarcity (BWS) map over cropland
+      <a href="{{base_url}}/media/{{job}}/BWS.tif">Download
+        data</a>
+    </p>
+    <p>
+
+      BWS is mapped with a yellow-orange-red gradient, where yellow represents area under BWS for 0 - 4 months in a
+      year, orange represents area under BWS for 4 - 8 months and red areas represents area under BWS for 8 - 12 months.
+      <strong>Figure 27</strong> shows the spatial distribution of GWS over the cropland.
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/gws.png" alt="" style="width: 100%; margin-top: 30px;" class="center">
+    <p class="imgTxt" style="text-align: center;"><span>Figure 27</span> Green Water Scarcity (GWS) map over cropland
+      <a href="{{base_url}}/media/{{job}}/GWS.tif">Download
+        data</a>
+    </p>
+
+    <p>
+      GWS is mapped with a blue-green gradient, where blue represents area under GWS for 0 - 4 months in a year, lighter
+      blue represents area under GWS for 4 - 8 months and green represents area under GWS for 8 - 12 months.
+      <strong>Figure 28</strong> shows the spatial distribution of EWS over the cropland.
+    </p>
+
+    <br />
+    <img src="{{base_url}}/media/{{job}}/ews.png" alt="" style="width: 100%; margin-top: 40px;" class="center">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 28</span> Economic Water Scarcity (EWS) map over cropland
+      <a href="{{base_url}}/media/{{job}}/EWS.tif">Download
+        data</a>
+    </p>
+
+    <p>
+      EWS is mapped with a blue-purple gradient, where blue represents area under EWS for 0 - 4 months in a year,
+      lighter blue represents area
+      under GWS for 4 - 8 months and purple represents area under GWS for 8-12 months.<br>
+    </p>
+
+  </article>
+  <article id="climate">
+    <h2 id="climate-title">Climate Change future projections (2020 - 2060)</h2>
+
+    <!-- <h3>
+      This is a little subtitle, here to explain what we are talking about
+    </h3> -->
+
+    <p>
+      In this section, future trends of annual air temperature and precipitation were analyzed using climate change
+      projection data extracted for the {{ area }}. The period considered for the trend analysis is 2020 to 2060. Future
+      climate simulation data provided by the Coupled Model Intercomparison Project (CMIP) under World Climate Research
+      Programme (WCRP) is used for the trend analysis. CMIP is developed as a multi-institutional project to better
+      understand past, present and future climate changes arising from natural, unforced variability or in response to
+      changes in radiative forcing in a multi-model context. CMIP6 consists of the “runs” from around 100 distinct
+      climate models being produced across 49 different modelling groups.
+      For this analysis, data from the <a
+        href="https://gmd.copernicus.org/articles/12/4823/2019/gmd-12-4823-2019.html"><strong>Canadian Earth System
+          Model version 5 (CanESM5)</strong></a> model is used. CanESM5 is a global model developed to simulate
+      historical climate change and variability, to make centennial scale projections of future climate, and to produce
+      initialized seasonal and decadal.
+    </p>
+
+    <p>
+      Further trends of air temperature and precipitation under two Shared Socio-economic Pathways (SSP's) scenarios are
+      reported.The SSPs scenarios are complex, incorporating a range from very ambitious mitigation to ongoing growth in
+      emissions. The most ambitious mitigation scenario was specifically designed to align with the low end of the Paris
+      Agreement global temperature goal of holding the increase in global temperature to well below 2°C above
+      pre-industrial levels, and pursuing efforts to limit the increase to 1.5°C.
+    </p>
+
+    In this analysis, two scenarios are used: <br>
+    <br>
+    <b>SSP5-8.5</b> - Very high GHG (GreenHouse Gas) emissions and CO2 emissions triple by 2075 <br>
+    <b>SSP2-4.5</b> - where scenario is intermediate GHG emissions and CO2 emissions around current levels until 2050,
+    then falling but not reaching net zero by 2100.
+    <br>
+
+    A detailed overview on ssp scenarios are given <a
+      href="https://climate-scenarios.canada.ca/?page=cmip6-overview-notes"><strong>here</strong></a>.
+
+    <br>
+    For {{ area }}, under <b>SSP5-8.5</b> trend in air temperature is reported to be <b>{{ stats.t3 }}</b> with reported
+    slope of <b>{{ stats.sl3 }}</b> Degree Celsius (see <strong>Figure 29</strong>). <br>
+
+    <img src="{{base_url}}/media/{{job}}/figt3.png" alt="" style="width: 100%; margin-top: 30px;" class="center">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 29</span> Yearly deviations from 2015-2020 mean for air
+      temperature under SSP-5 8.5 </p>
+    <p>
+      Under <b>SSP2-4.5</b> trend in air temperature is reported to be <b>{{ stats.t1 }}</b> with reported slope of
+      <b>{{ stats.sl1 }}</b> Degree Celsius(see <strong>Figure 31</strong>). <br>
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/figt1.png" alt="" style="width: 100%; margin-top: 30px;" class="center">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 30</span> Yearly deviations from 2015-2020 mean for air
+      temperature under SSP-2 4.5 </p>
+    <p>
+      <br />
+      For {{ area }}, under <b>SSP5-8.5</b> trend in precipitation is reported to be <b>{{ stats.t4 }}</b> with reported
+      slope of <b>{{ stats.sl4 }}</b> mm/year (see <strong>Figure 31</strong>). <br>
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/figt4.png" alt="" style="width: 100%; margin-top: 30px;" class="center">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 31</span> Yearly deviations from 2015-2020 mean for
+      precipitation under SSP-5 8.5
+    </p>
+
+    <p>
+      Under <b>SSP2-4.5</b> trend in precipitation is reported to be <b>{{ stats.t2 }}</b> with reported slope of <b>{{
+        stats.sl2 }}</b> mm/year(see <strong>Figure 32</strong>).<br>
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/figt2.png" alt="" style="width: 100%; margin-top: 30px;" class="center">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 32</span> Yearly deviations from 2015-2020 mean for
+      precipitation under SSP-4 2.5 </p>
+
+
+    <p>
+      Trends were computed using Sen’s slope and its significance were tested using Mannkendal tests. A 5 year running
+      mean was applied to the time series.
+    </p>
+
+    {% if stats.area > 10000 %}
+  </article>
+  <article id="waterstorage">
+    <h2 id="waterstorage-title">Water storage variability</h2>
+
+    <!-- <h3>
+      This is a little subtitle, here to explain what we are talking about
+    </h3> -->
+
+    <p>
+      Anomaly in water storage change can be studied using data from Gravity Recovery and Climate Experiment (GRACE)
+      twin satellites. GRACE satellites made detailed measurements of Earth's gravity field and improved investigations
+      about Earth's water reservoirs, over land, ice and oceans. In this section, the GRACE data is used to plot water
+      storage changes in cm over the study area from 2002 to 2021.
+      <br>
+      The dataset used is the gridded monthly global water storage/height anomalies relative to a time-mean, derived
+      from GRACE and GRACE-FO and using the Mascon approach. The water storage/height anomalies are given in equivalent
+      water thickness units (cm). The solution provided here is derived from solving for monthly gravity field
+      variations in terms of geolocated spherical cap mass concentration functions, rather than global spherical
+      harmonic coefficients. <strong>Figure 33</strong> shows the change in water storage over the last two decades
+      computed as water storage/height anomalies relative to a time-mean.
+    </p>
+
+    <!-- {% if stats.area > 10000 %} -->
+    <img src="{{base_url}}/media/{{job}}/grace_fig.png" alt="" style="width: 100%; margin-top: 30px;" class="center">
+    <p class="imgTxt" style="text-align: center;"><span>Figure 33</span> Change in waterstorage (cm) from 2002 to 2021
+      (Source: GRACE data) <a href="{{base_url}}/media/{{job}}/gracetable.csv">Download
+        table</a></p>
+    <!-- {% endif %} -->
+    </p>
+    {% endif %}
+
+  </article>
+  <article id="data">
+    <h2 id="data-title">Data sources</h2>
+
+    <!-- <h3>
+      This is a little subtitle, here to explain what we are talking about
+    </h3> -->
+    <p>
+      Open access remote sensing datasets were used to estimate the relevant metrics related to consumptive water use in
+      the study area. For the estimates of water consumption, Precipitation (P) and Actual EvapoTranspiration (ETa)
+      datasets were used at varying spatial resolutions. </p>
+    <p>
+      The Land cover type information in the study area is computed from the <a
+        href="https://lcviewer.vito.be/2015">Global landcover map</a> released by Copernicus program of European Union
+      which is available at 100m. The main input to develop this map are the time series of PROBA-V satellite
+      observations. The global landscape is divided into 23 discrete land cover types following the UN-FAO’s Land Cover
+      Classification System (LCCS).
+    </p>
+    <p>
+      In this analysis, DEM data from the Japan Aerospace Exploration Agency (JAXA) were used to understand the
+      topography of the basin. The ALOS World 3D - 30m (AW3D30) is generated from images collected using the
+      Panchromatic Remote-sensing Instrument for Stereo Mapping (PRISM) aboard the Advanced Land Observing Satellite
+      (ALOS) from 2006 to 2011. The data is open access and free to use for any scientific studies.
+    </p>
+    <p>
+      Time series of ETa data available from global product - Operational Simplified Surface Energy Balance (SSEBop) at
+      1 Km spatial resolution was used and made available to the users. SSEBop is developed by applying a simplified
+      surface energy balance model with MODIS sensor data as key input. For Precipitation, three global products were
+      made available for the users to select. The products available are – GPM, CHIRPS and PERSIANN (See <em>Table
+        4</em> for details). <em>Table 4</em> lists the data used in this analysis and its specifications including
+      sources.
+    </p>
+    <p>
+      ETr data is provided by the United States Geological Survey (USGS) at 1 degree spatial resolution and computed
+      using the Penman-Monteith equation as explained in <a href="https://www.fao.org/3/x0490e/x0490e00.htm">FAO 56
+        paper (Allen et al, 1998)</a>.
+    </p>
+  </article>
+  <article id="annex" class="tables_section">
+    <h2 id="annex-title">Tables</h2>
+
+
+    <section>
+
+      <div class="no-break">
+        <p>Table 1 The total annual precipitation (P), actual evapotranspiration (ETa) & reference ET (ETr) from 2010 -
+          2021 in the {{ area }} computed using ssebop & chirps</p>
+        <table class="table table-bordered table-responsive" id="csv1Root">
+
+        </table>
+      </div>
+
+
+
+      <div class="no-break">
+        <p> Table 2 The mean annual P, ETa, P-ETa & ETr in mm/year for each land cover class from 2010 - 2021 in the
+          {{ area }} computed using ssebop & chirps</p>
+
+        <table class="table table-bordered table-responsive" id="csv2Root">
+
+        </table>
+
+
+        <p>Table 3 The mean annual P, ETa, P-ETa & ETr in km3/year for each land cover class from 2010 - 2021 in the
+          {{ area }} computed using ssebop & chirps</p>
+
+        <table class="table table-bordered table-responsive" id="csv3Root">
+
+        </table>
+
+      </div>
+
+      <div class="no-break">
+        <p>Table 4 Open access data sources used in this analysis</p>
+
+        <table class="table table-bordered table-responsive" id="csv6Root">
+
+        </table>
+
+      </div>
+
+
+    </section>
+
+  </article>
+
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.2.0/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+  <!-- Optional JavaScript; choose one of the two! -->
+  <!-- <script src="js/report.js"></script> -->
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+Variable,Product,Spatial Resolution (m),Temporal Resolution,Source,Availability
+,,,,,
+Elevation,AW3D30,30,--,https://www.eorc.jaxa.jp/ALOS/en/aw3d30/index.htm ,--
+Land cover,,100,Annual,https://lcviewer.vito.be/2015 ,2015 - 2019
+Phenology (NDVI),MOD13A1,500,16 days,https://lpdaac.usgs.gov/products/mod13a1v006/ ,2002-
+Dry Matter Productivity (DMP),Copernicus,300,10 days,https://land.copernicus.eu/global/products/dmp ,1999-
+Actual Evapotranspiration,,,,,
+,WaPOR,250,Monthly,https://wapor.apps.fao.org/,2009-
+,SSEBop,1000,Monthly,https://edcintl.cr.usgs.gov/downloads/sciweb1/shared/fews/web/global ,2002 -
+,MOD16A2,500,8 days,https://lpdaac.usgs.gov/products/mod16a2v006/ ,2002 -
+Precipitation,,,,,
+,CHIRPS,5000,Daily,https://chrsdata.eng.uci.edu/ ,1981 - 
+,GPM,5000,"3 hours, daily",https://gpm.nasa.gov/data/directory ,1997 -
+,PERSIANN,10000,Daily,https://data.chc.ucsb.edu/products/CHIRPS-2.0/ ,1983 -
+Reference Evapotranspiration,SSEBop,100000,Daily,https://edcintl.cr.usgs.gov/downloads/sciweb1/shared/fews/web/global/,2001 -
+Water scarcity,Rosa et.al 2020,10000,Annual,https://www.science.org/doi/10.1126/sciadv.aaz6031,
+Water storage change,GRACE,100000,Monthly,https://podaac.jpl.nasa.gov/datasetlist,2002-

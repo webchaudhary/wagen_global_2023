@@ -1,0 +1,267 @@
+/* @import url(https://fonts.googleapis.com/css?family=Lato:400,300,100,700,900);*/
+
+h1,
+p,
+h2,
+h3,
+h4,
+a{
+  font-family: 'Helvetica';
+}
+
+h1 {
+  color: rgb(255, 255, 255);
+  margin: 0;
+  padding: 0;
+  font-weight: 800;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+  #font-size: 32pt;
+  font-size:3vw;
+  font-weight: 400;
+}
+
+
+h1::after {
+  content: "";
+  display: block;
+  border-bottom: 1px solid orange;
+  width: 25%;
+  position: relative;
+  bottom: -6px; /* your padding + border-width */
+}
+
+
+.header {
+  width: 100%;
+  min-height: 60%;
+  max-height: 60%;
+  padding:60px 0;
+  text-align: center;
+  background: #323A45;
+  color: white;
+  overflow: hidden;
+}
+
+
+.btn-bgstroke {
+  font-size: 20px;
+  display: inline-block;
+  border: 1px solid white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 300;
+  margin-top: 30px; 
+}
+
+.btn-bgstroke:hover {
+  background-color: white;
+  color: #33cccc;
+}
+
+
+@page {
+  margin: 4em 2em;
+
+  @top-left {
+    content: "WaterAccounting Report";
+    font-size: 0.8em;
+  }
+
+  @bottom-left {
+    border-top: 1px solid #aaa;
+    content: "";
+    font-size: 0.8em;
+    padding: 0.5em 0;
+    vertical-align: top;
+    width: 100%;
+  }
+
+  @bottom-right {
+    border-top: 1px solid #aaa;
+    content: "Page " counter(page) " of " counter(pages);
+    font-size: 0.8em;
+    padding: 0.5em 0;
+    vertical-align: top;
+    width: 100%;
+  }
+}
+
+html {
+  color: gray;
+  font-family: sans;
+  font-size: 10pt;
+  line-height: 1.4;
+}
+
+h3 {
+  color: rgb(236, 242, 247);
+  font-size:1.5vw;
+  margin: 0 0 0 0;
+}
+
+h2 {
+  color: #27b;
+  font-size:1.8vw;
+  margin: 0.2 0 0 0;
+}
+
+h4 {
+  color: #27b;
+  font-size:1vw;
+  margin: 0.2 0 0 0;
+}
+
+p {
+  margin: 0.5em 0;
+  color: rgba(0, 0, 0, 0.733);
+  font-size: 1vw;
+  text-align: justify;
+}
+
+
+aside {
+  background: rgb(255, 255, 255);
+  float: right;
+  margin-left: 0em;
+  width: 30%;
+  height: 100%;
+}
+
+aside embed {
+  margin-bottom: 1em;
+  width: 100%;
+}
+
+aside article {
+  margin: 0.5em;
+}
+
+aside article:not(article:last-child) {
+  border-bottom: 1px solid #aaa;
+}
+
+article  {
+  margin: 1em;
+}  
+
+#main {
+  border-right: medium solid orange;
+  width: 69%;
+}
+
+#secondary {
+  width: 70%;
+}
+
+#secondary article {
+  display: table-cell;
+  padding-right: 1em;
+}
+
+#secondary p {
+  background: #eee;
+  padding: 1em;
+  text-align: center;
+}
+
+
+meter {
+  color: #d44;
+  font-size: 1.5em;
+  font-weight: bold;
+  position: relative;
+}
+
+meter:before,
+meter:after {
+  border: 1px solid #888;
+  border-radius: 0.3em;
+  content: '';
+  display: inline-block;
+  height: 1.2em;
+  margin-right: 1em;
+  vertical-align: top;
+  width: 50%;
+}
+
+meter:after {
+  background: #d44;
+  border-color: transparent;
+  border-radius: 0.3em 0 0 0.3em;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 60%;
+}
+
+embed {
+  width: 80%;
+}
+
+img {
+  width: 80%
+}
+.imagebox {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  padding-top:12px;
+  padding-bottom: 12px;
+  text-align: center;
+  font-size:0.8vw;
+/*  border: 1px solid gray; */
+  font-family: Helvetica;
+}
+
+.tablebox {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  padding-top:12px;
+  padding-bottom: 12px;
+  text-align: left;
+  max-width: max-content;
+/*  border: 1px solid gray; */
+  font-family: Helvetica;
+}
+
+table {
+  border-collapse: collapse;
+  border-radius: 5px;
+  border: 1px solid #000000;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  font-family: "Quicksand", sans-serif;
+  font-weight: bold;
+  font-size:0.8vw;
+}
+
+th {
+  padding: 10px 20px;
+  background: #323A45;
+  color: #ffffff;
+  text-align: left;
+}
+
+td {
+  padding: 10px 20px;
+  color:black;
+  border: solid thin #000000;
+}
+
+tr:nth-child(even) {
+  background: #eeeeee;
+}
+
+.map {
+  height: 600px;
+  width: 70%;
+  margin: 0 auto;
+}
+
+hlt{
+  color: #323A45;
+  font-family: 'Helvetica';
+  font-style: italic;
+  font-size: 1vw;
+}

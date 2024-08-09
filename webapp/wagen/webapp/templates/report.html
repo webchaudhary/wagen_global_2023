@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Report for {{ area }} from {{ start }} to {{ stop }} </title>
+    <meta name="description" content="Report for area {{ area }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ settings.STATIC_URL }}css/report.css">
+  </head>
+  <body>
+    <h1>Water accounting report for the {{ area }} from {{ start }} to {{ stop }}</h1>
+    <aside>
+      <article>
+        <h3>Graph 1</h3>
+        <img src="{{ settings.MEDIA_URL }}{{ job }}/map.png"/>
+      </article>
+
+      <article>
+        <h2>Graph 2</h2>
+        <img src="{{ settings.MEDIA_URL }}{{ job }}/fig1.png"/>
+      </article>
+
+      <article>
+        <h2>Graph 3</h2>
+        <img src="{{ settings.MEDIA_URL }}{{ job }}/fig1.png "/>
+      </article>
+    </aside>
+    <section id="main">
+      <article>
+        <h2>Lorem ipsum dolor sit amet</h2>
+        <p>
+          Study area lies between Longitudes and Latitudes.
+        </p>
+		<img src="{{ settings.MEDIA_URL }}{{ job }}/fig1.png" alt="">
+      </article>
+    </section>
+    <section id="secondary">
+      <article>
+        <h2>Percentage of Land use type in the {{ area }}</h2>
+        <p>Lorem ipsum</p>
+		<img src="{{ settings.MEDIA_URL }}{{ job }}/fig1.png"/>
+      </article>
+
+      <article>
+        <h2>Orci varius natoque penatibus et magnis</h2>
+        <p>Lorem ipsum</p>
+      </article>
+    </section>
+  </body>
+
+</html>

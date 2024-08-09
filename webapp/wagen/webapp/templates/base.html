@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES_CODE %}
+
+<html lang="en">
+
+<head>
+  <title> Water Accounting Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <link rel="icon" type="image/x-icon" href="{% static 'imgs/favicon.png' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/fontawesome.min.css' %}" />
+
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+  <script src="{% static 'js/functions.js' %}"></script>
+</head>
+
+<body>
+
+
+
+  <div class="main_navbar">
+    <div class="navbar_text">
+      <h1> Water Accounting Dashboard</h1>
+    </div>
+    <div class="logo_container">
+      <img src="{% static 'imgs/World_Bank_Group_logo.png' %}" alt="logo">
+    </div>
+
+  </div>
+
+  <div class="main-content" id="body-pd">
+
+
+    <div class="auth_container" id="mainrow">
+      <div class="auth_form_box">
+        <div class="auth_profile">
+          <i class="fa fa-user" aria-hidden="true"></i>
+        </div>
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </div>
+
+
+    <footer class="page-footer font-small">
+      <div class="footer-copyright text-center py-2"> Water Accounting Dashboard © 2024
+      </div>
+    </footer>
+
+
+    <script src="{% static 'js/mobile-detect.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.5.0.beta3.min.js' %}"></script>
+</body>
+
+</html>

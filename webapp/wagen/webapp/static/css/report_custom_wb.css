@@ -1,0 +1,303 @@
+/*Fonts*/
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('../webfonts/SegoeUIBlack.woff2') format('woff2'),
+        url('../webfonts/SegoeUIBlack.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('../webfonts/SegoeUI-Bold.woff2') format('woff2'),
+        url('../webfonts/SegoeUI-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Segoe UI';
+    src: url('../webfonts/SegoeUI.woff2') format('woff2'),
+        url('../webfonts/SegoeUI.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+.main_section{
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+body {
+margin: 0px;
+padding: 0px;
+}
+
+#secLeft, #secRight {
+    height: calc(100vh - 150px);
+    overflow-y: auto; /* Ensure these sections can scroll vertically */
+}
+
+#secLeft::-webkit-scrollbar, #secRight::-webkit-scrollbar {
+    width: 3px;
+}
+
+#secLeft::-webkit-scrollbar-track, #secRight::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+#secLeft::-webkit-scrollbar-thumb, #secRight::-webkit-scrollbar-thumb {
+    background-color: #7e7c6e;
+    outline: 1px solid #faf6e0;
+}
+
+/* Optional: For compatibility with Firefox */
+#secLeft, #secRight {
+    scrollbar-width: thin;
+    scrollbar-color: #7e7c6e #faf6e0;
+}
+
+
+/* Universal css */
+#secLeft{
+    background-color: #faf6e0;
+    padding: 20px 50px 0 50px;
+    overflow-y:scroll;
+}
+#secRight{
+    background-color: #dfc99e;
+    padding: 0px;
+    overflow-y:scroll;
+    box-shadow: -9px 1px 26px -11px rgba(0,0,0,0.90);
+    -webkit-box-shadow: -9px 1px 26px -11px rgba(0,0,0,0.75);}
+h2{
+    color: #e27434;
+    /* font-family: 'Segoe UI';
+    font-weight: 900;
+    font-style: normal; */
+}
+.description{
+    font-size: 18px;
+    line-height: 27px;
+    text-align: justify;
+    text-justify: inter-word;
+}
+img{
+    width: 100%;
+}
+.imgTxt{
+    font-style: italic;
+    padding-top: 10px;
+}
+span{
+    font-weight: 700;
+    color: #00aeef;
+    font-style: normal;
+}
+a{
+    font-style: normal;
+}
+table #head{
+    background-color: #002f54;
+    color: white;
+}
+table #dataHeading{
+    background-color: #98242b;
+    color: white;
+}
+table #data{
+    background-color: #ffd17b;
+}
+#csv1Root td:first-child {
+    background: #98242b;
+    color: white;
+}
+#csv1Root tr:last-child {
+    font-weight: bold;
+}
+
+#csv2Root td:first-child {
+    background: #98242b;
+    color: white;
+}
+
+#csv3Root td:first-child {
+    background: #98242b;
+    color: white;
+}
+
+#csv4Root td:first-child {
+    background: #98242b;
+    color: white;
+}
+
+#csv5Root td:first-child {
+    background: #98242b;
+    color: white;
+}
+
+#csv6Root td:first-child {
+    background: #98242b;
+    color: white;
+}
+
+
+/* Download Button */
+button{
+    background: transparent;
+    border: none;
+    color: #00aeef;
+    text-decoration: underline;
+}
+button:hover{
+    background: #e27434;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+/* Individual Element Css */
+.img-fluid{
+    background-image: url('../imgs/banner.jpg');
+    height: 150px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: contain;
+}
+.img-fluid h1{
+    color: #fff;
+    padding: 20px 0 0 20px;
+    border-bottom: 1mm ridge rgba(255, 255, 255, 0.8);;
+    width: 70%;
+}
+.img-fluid img{
+    width: 200px;
+    float: right;
+    margin-right: 50px;
+}
+.img-fluid h3{
+    color: #00b1e3;
+    padding: 0px 0 20 20px;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+.figuresImg{
+    padding: 20 50 0 50px;
+}
+.figuresImg img{
+    
+    border: 2px solid #939393;
+}
+
+.imgsize1{
+    width: auto; 
+    height:65%;
+}
+
+.imgsize2{
+    width: auto; 
+    height:auto;
+}
+.map {
+    height: 600px;
+    width: 70%;
+    margin: 0 auto;
+    border: 2px solid #939393;
+}
+
+.row {
+    display: flex;
+}
+  
+.column {
+    flex: 50%;
+    padding: 5px;
+}
+
+/* Media Query Start */
+
+@media only screen and (max-width: 425px ) {
+    
+    #secLeft {
+        padding: 10px 10px 0px 10px;
+    }
+	#secRight {
+        padding: 10px 10px 0px 10px;
+    }
+    .studyArea p{
+        line-height: 30px;
+        font-size: 16px;
+    }
+    .img-fluid h1{
+        color: #fff;
+        padding: 10 0px;
+        border-bottom: 1px Solid;
+        width: 100%;
+        font-size: 24px;
+        text-align: center;
+    }
+    .img-fluid img {
+        width: 130px;
+        float: right;
+        margin-right: 10px;
+        padding: 0 10px;
+    }
+    .img-fluid h3{
+        color: #00b1e3;
+        padding: 0px 0 10 10px;
+        font-weight: bold;
+        margin-bottom: 0;
+        font-size: 16px;
+    }
+  }
+
+  @media only screen and (max-width: 768px ) {
+    #secLeft {
+        padding: 10px 10px 0px 10px;
+    }
+	#secRight {
+        padding: 10px 10px 0px 10px;
+    }
+    .studyArea p{
+        line-height: 30px;
+        font-size: 16px;
+    }
+    .img-fluid h1{
+        color: #fff;
+        padding: 10 0px;
+        border-bottom: 1px Solid;
+        width: 100%;
+        font-size: 24px;
+        text-align: center;
+    }
+    .img-fluid img {
+        width: 130px;
+        float: right;
+        margin-right: 10px;
+        padding: 0 10px;
+    }
+    .img-fluid h3{
+        color: #00b1e3;
+        padding: 0px 0 10 10px;
+        font-weight: bold;
+        margin-bottom: 0;
+        font-size: 16px;
+    }
+    .figuresImg {
+        padding: 20 20px 0 20px;
+  }
+}
+
+@media print {
+    #secRight {width: 500px;}
+    #secLeft {width: 700px; padding: 0px;}
+    .figuresImg{padding: 0px 0 0 10px;}
+    .figuresImg img{width: 75%; }
+    #report-section {width: 1240px;}
+
+}

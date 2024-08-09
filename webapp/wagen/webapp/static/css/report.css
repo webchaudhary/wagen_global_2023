@@ -1,0 +1,128 @@
+@page {
+  margin: 4em 2em;
+
+  @top-left {
+    content: "WaterAccounting Report";
+    font-size: 0.8em;
+  }
+
+  @bottom-left {
+    border-top: 1px solid #aaa;
+    content: "";
+    font-size: 0.8em;
+    padding: 0.5em 0;
+    vertical-align: top;
+    width: 100%;
+  }
+
+  @bottom-right {
+    border-top: 1px solid #aaa;
+    content: "Page " counter(page) " of " counter(pages);
+    font-size: 0.8em;
+    padding: 0.5em 0;
+    vertical-align: top;
+    width: 100%;
+  }
+}
+
+html {
+  color: gray;
+  font-family: sans;
+  font-size: 10pt;
+  line-height: 1.4;
+}
+
+
+h1 {
+  font-weight: 400;
+}
+
+h2 {
+  color: #27b;
+  font-size: 1em;
+  margin: 2em 0 0 0;
+  text-transform: uppercase;
+}
+
+p {
+  margin: 0.5em 0;
+  text-align: justify;
+}
+
+
+aside {
+  background: #eee;
+  float: right;
+  margin-left: 1em;
+  width: 30%;
+}
+
+aside embed {
+  margin-bottom: 1em;
+  width: 100%;
+}
+
+aside article {
+  margin: 1em;
+}
+
+aside article:not(article:last-child) {
+  border-bottom: 1px solid #aaa;
+}
+
+#main {
+  width: 60%;
+}
+
+#secondary {
+  width: 60%;
+}
+
+#secondary article {
+  display: table-cell;
+  padding-right: 1em;
+}
+
+#secondary p {
+  background: #eee;
+  padding: 1em;
+  text-align: center;
+}
+
+
+meter {
+  color: #d44;
+  font-size: 1.5em;
+  font-weight: bold;
+  position: relative;
+}
+
+meter:before,
+meter:after {
+  border: 1px solid #888;
+  border-radius: 0.3em;
+  content: '';
+  display: inline-block;
+  height: 1.2em;
+  margin-right: 1em;
+  vertical-align: top;
+  width: 50%;
+}
+
+meter:after {
+  background: #d44;
+  border-color: transparent;
+  border-radius: 0.3em 0 0 0.3em;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 60%;
+}
+
+embed {
+  width: 80%;
+}
+
+img {
+  width: 80%
+}

@@ -1,0 +1,692 @@
+@font-face {
+  font-family: Fira Sans;
+  font-weight: 400;
+  src: url(../webfonts/firasans-regular.otf);
+}
+@font-face {
+  font-family: Fira Sans;
+  font-style: italic;
+  font-weight: 400;
+  src: url(../webfonts/firasans-italic.otf);
+}
+@font-face {
+  font-family: Fira Sans;
+  font-weight: 300;
+  src: url(../webfonts/firasans-light.otf);
+}
+@font-face {
+  font-family: Fira Sans;
+  font-style: italic;
+  font-weight: 300;
+  src: url(../webfonts/firasans-lightitalic.otf);
+}
+@font-face {
+  font-family: Fira Sans;
+  font-weight: 700;
+  src: url(../webfonts/firasans-bold.otf);
+}
+
+@page {
+  @top-left {
+    background: #dfc99e;
+    content: counter(page);
+    height: 1cm;
+    text-align: center;
+    width: 1cm;
+  }
+  @top-center {
+    background: #dfc99e;
+    content: "";
+    display: block;
+    height: 0.05cm;
+    opacity: 0.5;
+    width: 100%;
+  }
+  @top-right {
+    content: string(heading);
+    font-size: 9pt;
+    height: 1cm;
+    vertical-align: middle;
+    width: 100%;
+  }
+  @bottom-right {
+    /* background: url(1.png) no-repeat center; */
+
+    background-size: cover;
+    height: 2cm;
+    width: 2cm;
+    content: "";
+  }
+}
+@page :blank {
+  @top-left {
+    background: none;
+    content: "";
+  }
+  @top-center {
+    content: none;
+  }
+  @top-right {
+    content: none;
+  }
+  @left-middle {
+    /* content: "This is the first sentence. \A This is the second sentence."; */
+    white-space: pre;
+    margin-left: 30px;
+    height: 2em;
+    line-height: 1.5em;
+  }
+}
+@page no-chapter {
+  @top-left {
+    background: none;
+    content: none;
+  }
+  @top-center {
+    content: none;
+  }
+  @top-right {
+    content: none;
+  }
+}
+@page :first {
+  /* background: url(banner.jpg) no-repeat center; */
+  background-color: #faf6e0;
+  margin: 0;
+}
+@page chapter {
+  background: #dfc99e;
+  margin: 0;
+  @top-left {
+    content: none;
+  }
+  @top-center {
+    content: none;
+  }
+  @top-right {
+    content: none;
+  }
+}
+
+html {
+  color: #393939;
+  font-family: calibri;
+  font-size: 11pt;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+h1 {
+  color: #ffffff;
+  font-size: 30pt;
+  page: no-chapter;
+  width: 100%;
+  border-bottom: 2px solid white;
+  margin-bottom: 0;
+  font-weight: 300;
+}
+
+h4 {
+  color: black;
+  font-weight: 400;
+}
+h2 {
+  break-before: always;
+  color: #e27434;
+  font-size: 28pt;
+  string-set: heading content();
+}
+h3 {
+  font-weight: 200;
+  font-size: 15pt;
+}
+h2, h3,h4 {
+  font-size: 13pt;
+}
+
+p{
+  text-align: justify;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+}
+
+img {
+  width: 114%;
+  height: 100%;
+}
+
+.imgTxt {
+  font-size: 11px;
+  font-style: italic;
+}
+
+em {
+  font-family: bold;
+}
+
+.small {
+  height: 100px;
+  width: 40%;
+}
+
+.map {
+  height: 200px;
+  width: 80%;
+  margin: 0 auto;
+  border: 2px solid #939393;
+}
+
+#cover {
+  align-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  height: 297mm;
+}
+#cover #header {
+  margin: 4cm -1cm 0 -1cm;
+  width: 110%;
+  background: url(banner.jpg) no-repeat center;
+  background-size: cover;
+  display: flex;
+  flex-direction: row;
+  padding: 0cm 1cm;
+}
+#cover #header #header-title {
+  width: 75%;
+  padding-left: 20px;
+}
+
+#cover #header #header-logo {
+  width: 25%;
+}
+#cover #header #header-title p {
+  color: #3cb5ca;
+  font-style: italic;
+  font-size: 25pt;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 3pt;
+}
+#cover address {
+  background: #e6d262;
+  flex: 1 50%;
+  margin: 0 -2cm;
+  padding: 1cm 0;
+  font-size: 25px;
+  white-space: pre-wrap;
+}
+#cover address:first-of-type {
+  padding-left: 3cm;
+}
+#contents {
+  break-before: right;
+  break-after: left;
+  page: no-chapter;
+}
+#contents h2 {
+  font-size: 20pt;
+  font-weight: 400;
+  margin-bottom: 1.5cm;
+}
+#contents h3 {
+  font-weight: 500;
+  margin: 3em 0 1em;
+}
+#contents h3::before {
+  background: #dfc99e;
+  content: "";
+  display: block;
+  height: 0.08cm;
+  margin-bottom: 0.25cm;
+  width: 2cm;
+}
+#contents ul {
+  list-style: none;
+  padding-left: 0;
+}
+#contents ul li {
+  border-top: 0.25pt solid #c1c1c1;
+  margin: 0.25cm 0;
+  padding-top: 0.25cm;
+}
+#contents ul li::before {
+  color: #dfc99e;
+  content: "• ";
+  font-size: 40pt;
+  line-height: 16pt;
+  vertical-align: bottom;
+}
+#contents ul li a {
+  color: inherit;
+  text-decoration-line: inherit;
+}
+#contents ul li a::before {
+  content: target-text(attr(href));
+}
+#contents ul li a::after {
+  color: #dfc99e;
+  content: target-counter(attr(href), page);
+  float: right;
+}
+
+#small-images {
+  display: flex;
+  flex-direction: row;
+}
+
+#study section {
+  columns: 2;
+  column-gap: 1cm;
+}
+#study section p {
+  text-align: justify;
+}
+#study section p:first-of-type {
+}
+
+#precipitation section {
+  columns: 2;
+  column-gap: 1cm;
+}
+#precipitation section p {
+  text-align: justify;
+}
+#precipitation section p:first-of-type {
+}
+
+#temporal section {
+  columns: 2;
+  column-gap: 1cm;
+}
+#temporal section p {
+  text-align: justify;
+}
+#temporal section p:first-of-type {
+}
+
+#land section {
+  columns: 2;
+  column-gap: 1cm;
+}
+#land section p {
+  text-align: justify;
+}
+#land section p:first-of-type {
+}
+
+#trend section {
+  columns: 2;
+  column-gap: 1cm;
+}
+#trend section p {
+  text-align: justify;
+}
+#trend section p:first-of-type {
+}
+
+#partitioning section {
+  columns: 2;
+  column-gap: 1cm;
+}
+#partitioning section p {
+  text-align: justify;
+}
+#partitioning section p:first-of-type {
+}
+
+#blue section {
+  columns: 2;
+  column-gap: 1cm;
+}
+#blue section p {
+  text-align: justify;
+}
+#blue section p:first-of-type {
+}
+
+#waterp section {
+  columns: 2;
+  column-gap: 1cm;
+}
+#waterp section p {
+  text-align: justify;
+}
+#waterp section p:first-of-type {
+}
+
+#waterd section {
+  columns: 2;
+  column-gap: 1cm;
+}
+#waterd section p {
+  text-align: justify;
+}
+#waterd section p:first-of-type {
+}
+
+#waters section {
+  columns: 2;
+  column-gap: 1cm;
+}
+#waters section p {
+  text-align: justify;
+}
+#waters section p:first-of-type {
+}
+
+#climate section {
+  columns: 2;
+  column-gap: 1cm;
+}
+#climate section p {
+  text-align: justify;
+}
+#climate section p:first-of-type {
+}
+
+#waterstorage section {
+  columns: 2;
+  column-gap: 1cm;
+}
+#waterstorage section p {
+  text-align: justify;
+}
+#waterstorage section p:first-of-type {
+}
+
+#data section {
+  columns: 2;
+  column-gap: 1cm;
+}
+#data section p {
+  text-align: justify;
+}
+#data section p:first-of-type {
+}
+
+#annex section {
+  columns: 1;
+  column-gap: 1cm;
+}
+#annex section p {
+  text-align: justify;
+}
+#annex section p:first-of-type {
+}
+
+#skills h3 {
+  background: #dfc99e;
+  margin: 0 -3cm 1cm;
+  padding: 1cm 1cm 1cm 3cm;
+  width: 21cm;
+}
+#skills section {
+  padding: 0.5cm 0;
+}
+#skills section#table-content::before {
+  background: url(table-content.svg) no-repeat center #dfc99e;
+  background-size: 50%;
+  content: "";
+  display: inline-block;
+  float: left;
+  height: 2cm;
+  margin-right: 0.5cm;
+  vertical-align: middle;
+  width: 2cm;
+}
+#skills section#heading::before {
+  background: url(heading.svg) no-repeat center #dfc99e;
+  background-size: 50%;
+  content: "";
+  display: inline-block;
+  float: left;
+  height: 2cm;
+  margin-right: 0.5cm;
+  vertical-align: middle;
+  width: 2cm;
+}
+#skills section#multi-columns::before {
+  background: url(multi-columns.svg) no-repeat center #dfc99e;
+  background-size: 50%;
+  content: "";
+  display: inline-block;
+  float: left;
+  height: 2cm;
+  margin-right: 0.5cm;
+  vertical-align: middle;
+  width: 2cm;
+}
+#skills section#internal-links::before {
+  background: url(internal-links.svg) no-repeat center #dfc99e;
+  background-size: 50%;
+  content: "";
+  display: inline-block;
+  float: left;
+  height: 2cm;
+  margin-right: 0.5cm;
+  vertical-align: middle;
+  width: 2cm;
+}
+#skills section#style::before {
+  background: url(style.svg) no-repeat center #dfc99e;
+  background-size: 50%;
+  content: "";
+  display: inline-block;
+  float: left;
+  height: 2cm;
+  margin-right: 0.5cm;
+  vertical-align: middle;
+  width: 2cm;
+}
+#skills section h4 {
+  margin: 0;
+}
+#skills section p {
+  margin-top: 0;
+}
+
+#offers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+#offers h2,
+#offers h3 {
+  width: 100%;
+}
+#offers section {
+  width: 30%;
+}
+#offers section h4 {
+  margin-bottom: 0;
+}
+#offers section ul {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+#offers section ul li:not(:last-of-type) {
+  margin: 0.5cm 0;
+}
+#offers section p {
+  background: #dfc99e;
+  display: block;
+  font-size: 15pt;
+  font-weight: 700;
+  margin-bottom: 0;
+  padding: 0.25cm 0;
+  text-align: center;
+}
+
+#chapter {
+  align-items: center;
+  display: flex;
+  height: 297mm;
+  justify-content: center;
+  page: chapter;
+}
+
+#typography section {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1cm 0;
+}
+#typography section h4 {
+  border-top: 1pt solid;
+  flex: 1 25%;
+  margin: 0;
+}
+#typography section h4 + * {
+  flex: 1 75%;
+  margin: 0;
+  padding-left: 0.5cm;
+}
+#typography section p {
+  text-align: justify;
+}
+#typography section ul {
+  line-height: 2;
+  list-style: none;
+}
+#typography section#small-caps p {
+  font-variant: small-caps;
+}
+#typography section#ligatures dl {
+  display: flex;
+  flex-wrap: wrap;
+}
+#typography section#ligatures dl dt {
+  font-weight: 400;
+  width: 30%;
+}
+#typography section#ligatures dl dd {
+  flex: 1 70%;
+  margin: 0;
+  padding: 0;
+}
+#typography section#ligatures .none {
+  font-variant-ligatures: none;
+}
+#typography section#ligatures .common {
+  font-variant-ligatures: common-ligatures;
+}
+#typography section#ligatures .discretionary {
+  font-variant-ligatures: discretionary-ligatures;
+}
+#typography section#ligatures .contextual {
+  font-variant-ligatures: contextual;
+}
+#typography section#numbers dl {
+  display: flex;
+  flex-wrap: wrap;
+}
+#typography section#numbers dl dt {
+  font-weight: 400;
+  width: 30%;
+}
+#typography section#numbers dl dd {
+  flex: 1 70%;
+  margin: 0;
+  padding: 0;
+}
+#typography section#numbers #fractions {
+  font-variant-numeric: diagonal-fractions;
+}
+#typography section#numbers #ordinals {
+  font-variant-numeric: ordinal;
+}
+#typography section#numbers #slashed {
+  font-variant-numeric: slashed-zero;
+}
+#typography section#numbers #super {
+  font-variant-position: super;
+}
+#typography section#numbers #sub {
+  font-variant-position: sub;
+}
+#typography section#figures dl {
+  columns: 4;
+}
+#typography section#figures dl dt {
+  font-weight: 400;
+}
+#typography section#figures dl dd {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+#typography section#figures dl dd ul {
+  padding: 0 1em 0 0;
+}
+#typography section#figures #oldstyle {
+  font-variant-numeric: oldstyle-nums;
+}
+#typography section#figures #tabular {
+  font-variant-numeric: tabular-nums;
+}
+#typography section#figures #old-tabular {
+  font-variant-numeric: oldstyle-nums tabular-nums;
+}
+
+/* TABLE */
+
+@page landscape_page {
+  size: landscape;
+}
+
+.tables_section {
+  page: landscape_page;
+}
+
+table #head{
+  background-color: #002f54;
+  color: white;
+  padding-left: 3px;
+}
+table #dataHeading{
+  background-color: #98242b;
+  color: white;
+}
+table #data{
+  background-color: #ffd17b;
+  padding-left: 3px;
+}
+
+#csv1Root td:first-child {
+  background: #98242b;
+  color: white;
+  padding-left: 3px;
+}
+#csv1Root tr:last-child {
+  font-weight: bold;
+}
+
+#csv2Root td:first-child {
+  background: #98242b;
+  color: white;
+}
+
+#csv3Root td:first-child {
+  background: #98242b;
+  color: white;
+}
+
+#csv4Root td:first-child {
+  background: #98242b;
+  color: white;
+}
+
+#csv5Root td:first-child {
+  background: #98242b;
+  color: white;
+}
+
+#csv6Root td:first-child {
+  background: #98242b;
+  color: white;
+}

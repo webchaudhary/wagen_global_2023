@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+
+{% block content %}
+    {% if form.errors %}
+        <p>{% trans "Your username and password didn't match. Please try again." %}</p>
+    {% endif %}
+
+    
+    <form method="post" action="/accounts/login/">
+        {% csrf_token %}
+        <div class="auth_item">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        <div class="auth_item">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+
+        </div>
+        
+
+        <div class="auth_button">
+            <input type="submit" value="{% trans 'Login' %}">
+        </div>
+    </form>
+    <br>
+    <!-- <p style="text-align: center;"><a href="/accounts/password_reset">{% trans "Lost password?" %}</a></p> -->
+{% endblock %}
+
+
