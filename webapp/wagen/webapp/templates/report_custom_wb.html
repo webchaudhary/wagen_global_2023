@@ -25,8 +25,6 @@
 	</head>
 
 	<body>
-
-		
 		<section class="main_section">
 			<div class="container-fluid py-0 mx-0 my-0 px-0 d-print-table">
 				<div class="header">
@@ -40,7 +38,7 @@
 				<div class="container-fluid d-print-table" id="report-section">
 					<div class="row d-print-table-row">
 						<div class="col-sm-12 col-md-8 d-print-table-cell" id="secLeft">
-
+							
 
 							<div class="studyArea my-3 mx-3">
 								<h2>Study area</h2>
@@ -222,8 +220,7 @@
 									years with a linear trend line.
 								</p>
 
-								{% if stats.et == "wapor2" or stats.et == "wapor3" %}
-								<h2>Partitioning ETa into Ea and Ta</h2>
+								<!-- <h2>Partitioning ETa into Ea and Ta</h2>
 								<p class="description">
 									Evapotranspiration (ETa) is an aggregation of Evaporation (E) and Transpiration (T).
 									E is related to the vaporization of water from wet surfaces (e.g. water bodies, wet
@@ -237,9 +234,9 @@
 									<em>Figure 19 & 20</em> shows the average annual Ea and Ta respectively in the study
 									area. Maps are in red-yellow-Blue gradient representing lower-mid-high E and T in
 									the study area.
-								</p>
+								</p> -->
 
-								<h2>Blue and Green ET</h2>
+								<!-- <h2>Blue and Green ET</h2>
 								<p class="description">
 									The annual actual ETa is divided into green and blue water. Green water represents
 									the fraction of precipitation that infiltrates into the soil and is available to
@@ -259,9 +256,7 @@
 									<em>Figure 21 & 22</em> shows the spatial distribution of blue and green ETa over
 									cropland. The blue and green ETa are mapped in red-yellow-Blue gradient representing
 									lower-mid-high water use in the study area.
-								</p>
-								{% endif %}
-
+								</p> -->
 
 								<h2>Water Productivity</h2>
 								<p class="description">
@@ -465,11 +460,6 @@
 							</div>
 
 							<div class="my-3 mx-3" style="border: 1px solid black; padding: 5px;">
-								<p>
-									This report was produced by the Water Accounting Workstream of the Water Global
-									Practice. For more information, please contact Poolad Karimi
-									(PKarimi@worldbank.org).
-								</p>
 								<h2>Copyright</h2>
 								<p>
 									© 2024 International Bank for Reconstruction and Development / The World Bank <br />
@@ -622,7 +612,7 @@
 										onclick="window.open('{{ settings.MEDIA_URL }}{{ job }}/pcpts.csv')">Download
 										table</button></p>
 
-								<img src="{{ settings.MEDIA_URL }}{{ job }}/ea.png" alt="">
+								<!-- <img src="{{ settings.MEDIA_URL }}{{ job }}/ea.png" alt="">
 								<p class="imgTxt"><span>Figure 19</span> Annual Ea(mm/year) over the studyarea <button
 										type="submit"
 										onclick="window.open('{{ settings.MEDIA_URL }}{{ job }}/Ea.tif')">Download
@@ -632,9 +622,9 @@
 								<p class="imgTxt"><span>Figure 20</span> Annual Ta(mm/year) over the studyarea <button
 										type="submit"
 										onclick="window.open('{{ settings.MEDIA_URL }}{{ job }}/Ta.tif')">Download
-										data</button></p>
+										data</button></p> -->
 
-								<img src="{{ settings.MEDIA_URL }}{{ job }}/etb.png" alt="">
+								<!-- <img src="{{ settings.MEDIA_URL }}{{ job }}/etb.png" alt="">
 								<p class="imgTxt"><span>Figure 21</span> Annual blue ET(mm/year) over the cropland
 									<button type="submit"
 										onclick="window.open('{{ settings.MEDIA_URL }}{{ job }}/ETb.tif')">Download
@@ -646,7 +636,7 @@
 									<button type="submit"
 										onclick="window.open('{{ settings.MEDIA_URL }}{{ job }}/ETg.tif')">Download
 										data</button>
-								</p>
+								</p> -->
 
 								<img src="{{ settings.MEDIA_URL }}{{ job }}/dmp.png" alt="">
 								<p class="imgTxt"><span>Figure 23</span> Annual TBP (Kg/ha) over cropland <button
@@ -863,8 +853,8 @@
 				}
 			});
 
-			var center = ol.proj.transform([{{ stats.centx }}, { { stats.centy } }], 'EPSG:4326', 'EPSG:3857');
-			var extent = ol.proj.transformExtent([{{ stats.w }}, { { stats.s } }, { { stats.e } }, { { stats.n } }], 'EPSG:4326', 'EPSG:3857');
+			var center = ol.proj.transform([{{stats.centx}}, {{stats.centy}}], 'EPSG:4326', 'EPSG:3857');
+			var extent = ol.proj.transformExtent([{{stats.w}}, {{stats.s}}, {{stats.e}}, {{stats.n}}], 'EPSG:4326', 'EPSG:3857');
 
 			var source = new ol.source.Vector({
 				url: 'bound.geojson',

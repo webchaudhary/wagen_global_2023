@@ -817,57 +817,6 @@
     <!-- <address>contact@courtbouillon.org https://courtbouillon.org</address> -->
   </article>
 
-  <article id="disclaimer">
-    <br />
-    This report was produced by the Water Accounting Workstream of the Water Global Practice. For more information,
-    please contact Poolad Karimi (PKarimi@worldbank.org).
-
-    <h3 style="color: #e27434; font-weight: 400;">Copyright </h3>
-    <p>
-      © 2024 International Bank for Reconstruction and Development / The World Bank <br />
-      1818 H Street NW<br />
-      Washington DC 20433<br />
-      Telephone: 202-473-1000<br />
-      Internet: <span style="color: #e27434;">www.worldbank.org</span><br />
-      <br />
-
-
-      This work is a product of the staff of The World Bank with external contributions. The findings, interpretations,
-      and conclusions expressed in this work do not necessarily reflect the views of The World Bank, its Board of
-      Executive Directors, or the governments they represent. <br />
-
-      The World Bank does not guarantee the accuracy, completeness, or currency of the data included in this work and
-      does not assume responsibility for any errors, omissions, or discrepancies in the information, or liability with
-      respect to the use of or failure to use the information, methods, processes, or conclusions set forth. The
-      boundaries,
-      colors, denominations, links/footnotes and other information shown in this work do not imply any judgment on the
-      part of The World Bank concerning the legal status of any territory or the endorsement or acceptance of such
-      boundaries. The citation of works authored by others does not mean the World Bank endorses the views expressed by
-      those authors or the content of their works. <br />
-
-      Nothing herein shall constitute or be construed or considered to be a limitation upon or waiver of the privileges
-      and immunities of The World Bank, all of which are specifically reserved.
-    </p> <br />
-
-
-
-
-    <h3 style="color: #e27434; font-weight: 400;"> Rights and Permissions </h3>
-
-    <p>
-      The material in this work is subject to copyright. Because The World Bank encourages dissemination of its
-      knowledge,
-      this work may be reproduced, in whole or in part, for noncommercial purposes as long as full attribution to this
-      work is given.<br />
-      Any queries on rights and licenses, including subsidiary rights, should be addressed to World Bank Publications,
-      The
-      World Bank Group, 1818 H Street NW, Washington, DC 20433, USA; fax: 202-522-2625; e-mail:
-      <span style="color: #e27434;">pubrights@worldbank.org.</span>
-    </p>
-
-
-  </article>
-
 
  
 
@@ -884,9 +833,8 @@
       <li><a href="#temporal-title"></a></li>
       <li><a href="#land-title"></a></li>
       <li><a href="#trend-title"></a></li>
-      {% if stats.et == "wapor2" or stats.et == "wapor3" %}
       <li><a href="#partitioning-title"></a></li>
-      {% endif %}
+      <li><a href="#blue-title"></a></li>
       <li><a href="#waterp-title"></a></li>
       <li><a href="#waterd-title"></a></li>
       <li><a href="#waters-title"></a></li>
@@ -1274,7 +1222,47 @@
 
   </article>
 
+  <article id="blue">
+    <h2 id="blue-title">Blue and Green ET</h2>
 
+    <!-- <h3>
+      This is a little subtitle, here to explain what we are talking about
+    </h3> -->
+
+    <p>
+      The annual actual ETa is divided into green and blue water. Green water represents the fraction of precipitation
+      that infiltrates into the soil and is available to plants; while blue water comprising runoff, groundwater, and
+      stream base flow.
+    </p>
+
+    <p>
+      The average annual ETb and ETg over cropland in the study area is {{ stats.etb }} mm/year & {{ stats.etg }}
+      mm/year respectively.
+      In this analysis, green ETa was computed by subtracting the average ETa over Rainfed area from ETa over the
+      cropland. The remaining ETa over cropland were considered as blue ETa. The Rainfed area was computed from the <a
+        href="http://due.esrin.esa.int/page_globcover.php">Globcover land cover map</a>. This methodology is explained
+      <a href="https://www.sciencedirect.com/science/article/pii/S2214581821000896">here</a>.
+
+    </p>
+
+    <p>
+      <strong>Figure 20 & 21</strong> shows the spatial distribution of blue and green ETa over cropland. The blue and
+      green ETa are mapped in red-yellow-Blue gradient representing lower-mid-high water use in the study area.
+    </p>
+    <img src="{{base_url}}/media/{{job}}/etb.png" alt="" style="width: 100%; margin-top: 30px;" class="center">
+    <p class="imgTxt" style="text-align: center;"><span>Figure 20</span> Annual blue ET(mm/year) over the cropland
+      <a href="{{base_url}}/media/{{job}}/ETb.tif">Download
+        data</a>
+    </p>
+
+    <img src="{{base_url}}/media/{{job}}/etg.png" alt="" style="width: 100%; margin-top: 30px;" class="center">
+
+    <p class="imgTxt" style="text-align: center;"><span>Figure 21</span> Annual green ET(mm/year) over the cropland
+      <a href="{{base_url}}/media/{{job}}/ETg.tif">Download
+        data</a>
+    </p>
+
+  </article>
 
   {% endif %}
 
@@ -1640,8 +1628,57 @@
 
   </article>
 
-  
+  <article id="disclaimer">
+    <br />
+    This report was produced by the Water Accounting Workstream of the Water Global Practice. For more information,
+    please contact Poolad Karimi (PKarimi@worldbank.org).
 
+    <h3 style="color: #e27434; font-weight: 400;">Copyright </h3>
+    <p>
+      © 2024 International Bank for Reconstruction and Development / The World Bank <br />
+      1818 H Street NW<br />
+      Washington DC 20433<br />
+      Telephone: 202-473-1000<br />
+      Internet: <span style="color: #e27434;">www.worldbank.org</span><br />
+      <br />
+
+
+      This work is a product of the staff of The World Bank with external contributions. The findings, interpretations,
+      and conclusions expressed in this work do not necessarily reflect the views of The World Bank, its Board of
+      Executive Directors, or the governments they represent. <br />
+
+      The World Bank does not guarantee the accuracy, completeness, or currency of the data included in this work and
+      does not assume responsibility for any errors, omissions, or discrepancies in the information, or liability with
+      respect to the use of or failure to use the information, methods, processes, or conclusions set forth. The
+      boundaries,
+      colors, denominations, links/footnotes and other information shown in this work do not imply any judgment on the
+      part of The World Bank concerning the legal status of any territory or the endorsement or acceptance of such
+      boundaries. The citation of works authored by others does not mean the World Bank endorses the views expressed by
+      those authors or the content of their works. <br />
+
+      Nothing herein shall constitute or be construed or considered to be a limitation upon or waiver of the privileges
+      and immunities of The World Bank, all of which are specifically reserved.
+    </p> <br />
+
+
+
+
+    <h3 style="color: #e27434; font-weight: 400;"> Rights and Permissions </h3>
+
+    <p>
+      The material in this work is subject to copyright. Because The World Bank encourages dissemination of its
+      knowledge,
+      this work may be reproduced, in whole or in part, for noncommercial purposes as long as full attribution to this
+      work is given.<br />
+      Any queries on rights and licenses, including subsidiary rights, should be addressed to World Bank Publications,
+      The
+      World Bank Group, 1818 H Street NW, Washington, DC 20433, USA; fax: 202-522-2625; e-mail:
+      <span style="color: #e27434;">pubrights@worldbank.org.</span>
+    </p>
+
+
+  </article>
+  
 
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.2.0/papaparse.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

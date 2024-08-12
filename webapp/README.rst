@@ -234,6 +234,7 @@ Restart the celery and uWSGI in development after updates
 tail -n 100 /home/aman/wagen_global/log/celery/worker1-6.log
 tail -n 100 /home/aman/wagen_global/log/celery/worker1.log`
 
+`tail -f /home/aman/wagen_global/log/celery/worker1-7.log`
 
 `for file in /home/aman/wagen_global/log/celery/*.log; do
     echo "Checking $file"

@@ -183,10 +183,10 @@
                   <select class="form-select" name="precip" id="precip" aria-label="Example select with button addon">
                     <option value="chirps">Chirps</option>
                     <option value="gpm">GPM</option>
-                    <option value="persiann">Persiann</option>
+                    <!-- <option value="persiann">Persiann</option> -->
                     <option value="gsmap">GsMAP</option>
                     <option value="era5">ERA5</option>
-                    <option value="enspcp">Ensemble</option>
+                    <option value="ensemble">Ensemble</option>
                   </select>
                 </div>
                 <div class="subsecstart">
@@ -1236,6 +1236,7 @@
               $("#returnText").text("The selected area exceed from Ensemble bounding box (-180, -60, 180, 60) ")
               $("#returnModal").modal('show');
               $("#getReport").prop("disabled", true);
+              $("#et").val("ssebop");
               return
             }
           }
@@ -1244,16 +1245,17 @@
         var et = $('#et').val();
 
 
-        if (et == "wapor") {
+        if (et == "wapor2") {
           for (let poly in multipolys) {
             var geom = geoJSONFormat.writeGeometryObject(multipolys[poly])
             for (let wapor in wapor_source) {
               var waporcheck = turf.booleanContains(wapor_source[wapor], geom)
               if (waporcheck == false) {
                 $("#returnText").text("");
-                $("#returnText").text("The selected area exceed from WaPOR bounding box (cover only Africa) ")
+                $("#returnText").text("The selected area exceed from WaPOR2 bounding box (cover only Africa) ")
                 $("#returnModal").modal('show');
                 $("#getReport").prop("disabled", true);
+                $("#et").val("ssebop");
                 return
               }
             }
@@ -1268,6 +1270,7 @@
                 $("#returnText").text("The selected area exceed from Ensemble bounding box (cover only Africa) ")
                 $("#returnModal").modal('show');
                 $("#getReport").prop("disabled", true);
+                $("#et").val("ssebop");
                 return
               }
             }

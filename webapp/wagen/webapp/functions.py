@@ -20,6 +20,7 @@ import jinja2
 from weasyprint import HTML
 from django.template.loader import render_to_string
 
+
 def send_mail_attach(sub, mess, to, attach):
     """Send email with attachment"""
     try:
@@ -62,6 +63,7 @@ def get_date():
 #         html_file.write(output_text)
 #     return html_path
 
+
 def render_prod_html(jobid, area, stats):
     """Render html page using jinja"""
     template_loader = jinja2.FileSystemLoader(searchpath=os.path.join(settings.BASE_DIR, 'webapp', "templates"))
@@ -73,6 +75,7 @@ def render_prod_html(jobid, area, stats):
     with open(html_path, 'w') as html_file:
         html_file.write(output_text)
     return html_path
+
 
 def render_pdf_html(jobid, area, stats):
     """Render HTML page using Django templates"""
@@ -87,8 +90,6 @@ def render_pdf_html(jobid, area, stats):
     with open(html_path, 'w') as html_file:
         html_file.write(output_text)
     return html_path
-
-
 
 
 def render_pdf(htmlfile2, jobid):
@@ -121,6 +122,7 @@ def render_pdf(htmlfile2, jobid):
     table_element_2 = soup.find('table', {'id': 'csv2Root'})
     table_element_3 = soup.find('table', {'id': 'csv3Root'})
     table_element_4 = soup.find('table', {'id': 'csv6Root'})
+
 
     # Replace the table content with the new HTML tables
     table_element_1.replace_with(BeautifulSoup(html_table_1, 'html.parser'))
